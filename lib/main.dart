@@ -4,14 +4,17 @@ import 'package:get/get.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/ui/theme/theme.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Window.initialize();
-  await Window.setEffect(
-    effect:
-        Platform.isWindows ? WindowEffect.acrylic : WindowEffect.transparent,
-  );
+  if (!kIsWeb) {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Window.initialize();
+    await Window.setEffect(
+      effect:
+          Platform.isWindows ? WindowEffect.acrylic : WindowEffect.transparent,
+    );
+  }
   runApp(const MyApp());
 }
 

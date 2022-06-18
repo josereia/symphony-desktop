@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import '../../controllers/root_controller.dart';
+import 'dart:io';
 
 class NavigationWidget extends StatelessWidget {
   final RootController controller;
@@ -35,7 +37,7 @@ class NavigationWidget extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: Container(
-        color: Theme.of(context).colorScheme.primaryContainer.withAlpha(250),
+        color: Theme.of(context).colorScheme.primaryContainer.withAlpha(kIsWeb ? 255 : Platform.isWindows ? 180 : 250),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
