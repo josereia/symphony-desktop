@@ -37,7 +37,7 @@ class NavigationWidget extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: Container(
-        color: Theme.of(context).colorScheme.primaryContainer.withAlpha(kIsWeb ? 255 : Platform.isWindows ? 180 : 250),
+        color: Theme.of(context).colorScheme.primaryContainer.withAlpha(kIsWeb ? 255 : Platform.isWindows ? 180 : 200),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
