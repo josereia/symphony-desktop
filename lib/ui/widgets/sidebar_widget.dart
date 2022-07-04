@@ -87,6 +87,15 @@ class SidebarWidget extends GetView<NavigationController> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: controller.getIndex == index
+                      ? Colors.black.withAlpha(16)
+                      : Colors.transparent,
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
               color: controller.getIndex == index
                   ? Theme.of(context).colorScheme.background
                   : Colors.transparent,
@@ -97,6 +106,7 @@ class SidebarWidget extends GetView<NavigationController> {
               children: [
                 Icon(
                   icon,
+                  size: 18,
                   color: controller.getIndex == index
                       ? Theme.of(context).colorScheme.onBackground
                       : Theme.of(context).colorScheme.onBackground,

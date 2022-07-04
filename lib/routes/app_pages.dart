@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:symphony_desktop/pages/albums_page.dart';
-import 'package:symphony_desktop/pages/root_page.dart';
+import 'package:symphony_desktop/ui/pages/albums_page.dart';
+import 'package:symphony_desktop/ui/pages/root_page.dart';
 
 part 'app_routes.dart';
 
