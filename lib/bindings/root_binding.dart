@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:symphony_desktop/controllers/root_controller.dart';
+import 'package:symphony_desktop/controllers/navigation_controller.dart';
 
-class RootBinding implements Bindings {
+class NavigationBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => RootController());
+    Get.lazyPut(() => NavigationController());
   }
 }
