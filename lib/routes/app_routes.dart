@@ -5,5 +5,7 @@ abstract class AppRoutes {
   static const home = "/home";
   static const search = "/search";
   static const library = "/library";
-  static const albumsPage = "/albums";
+  static const albums = "/albums";
+  static const artists = "/artists";
+  static const favorites = "/favorites";
 }

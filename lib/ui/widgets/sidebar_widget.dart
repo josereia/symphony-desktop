@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
+import 'package:symphony_desktop/routes/app_pages.dart';
+import 'package:symphony_desktop/main.dart';
 
 class SidebarWidget extends GetView<NavigationController> {
   final List _items = [
@@ -15,16 +16,19 @@ class SidebarWidget extends GetView<NavigationController> {
           "index": 0,
           "icon": FeatherIcons.home,
           "title": 'Início',
+          "route": AppRoutes.initial,
         },
         {
           "index": 1,
           "icon": FeatherIcons.search,
           "title": 'Buscar',
+          "route": AppRoutes.search,
         },
         {
           "index": 2,
           "icon": FeatherIcons.bookOpen,
           "title": 'Biblioteca',
+          "route": AppRoutes.library,
         }
       ]
     },
@@ -35,16 +39,19 @@ class SidebarWidget extends GetView<NavigationController> {
           "index": 3,
           "icon": FeatherIcons.disc,
           "title": 'Álbuns',
+          "route": AppRoutes.albums,
         },
         {
           "index": 4,
           "icon": FeatherIcons.users,
-          "title": 'Cantores',
+          "title": 'Artistas',
+          "route": AppRoutes.artists,
         },
         {
           "index": 5,
           "icon": FeatherIcons.heart,
           "title": 'Favoritos',
+          "route": AppRoutes.favorites,
         }
       ]
     }
@@ -78,25 +85,33 @@ class SidebarWidget extends GetView<NavigationController> {
       required IconData icon,
       required String text,
       required int index,
+      required String route,
     }) {
       return Obx(
         () => InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () => controller.setIndex(index),
+          onTap: () {
+            Get.toNamed(route);
+            navigationKey.currentState?.popUntil((route) {
+              controller.setCurrentRoute(route.settings.name);
+              return true;
+            });
+          },
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: controller.getIndex == index
+                  color: controller.getCurrentRoute == route
                       ? Colors.black.withAlpha(16)
                       : Colors.transparent,
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
               ],
-              color: controller.getIndex == index
+              color: controller.getCurrentRoute == route
                   ? Theme.of(context).colorScheme.background
                   : Colors.transparent,
             ),
@@ -107,17 +122,13 @@ class SidebarWidget extends GetView<NavigationController> {
                 Icon(
                   icon,
                   size: 18,
-                  color: controller.getIndex == index
-                      ? Theme.of(context).colorScheme.onBackground
-                      : Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onBackground,
                 ),
                 const SizedBox(width: 16),
                 Text(
                   text,
                   style: TextStyle(
-                    color: controller.getIndex == index
-                        ? Theme.of(context).colorScheme.onBackground
-                        : Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
               ],
@@ -148,6 +159,7 @@ class SidebarWidget extends GetView<NavigationController> {
               icon: _items[categoryIndex]["items"][categoryItemIndex]["icon"],
               text: _items[categoryIndex]["items"][categoryItemIndex]["title"],
               index: _items[categoryIndex]["items"][categoryItemIndex]["index"],
+              route: _items[categoryIndex]["items"][categoryItemIndex]["route"],
             ),
           ),
         ],

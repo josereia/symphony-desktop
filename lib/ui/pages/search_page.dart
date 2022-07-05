@@ -6,8 +6,13 @@ class SearchPage extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Buscar"),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Buscar'),
+      ),
+      body: const Center(
+        child: Text('Buscar'),
+      ),
     );
   }
 }
