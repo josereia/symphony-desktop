@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:symphony_desktop/ui/widgets/header_widget.dart';
 
 class AlbumsPage extends GetView {
   const AlbumsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Álbuns'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      appBar: HeaderWidget(title: "Álbuns"),
+      body: Center(
         child: Text('Álbuns'),
       ),
     );
