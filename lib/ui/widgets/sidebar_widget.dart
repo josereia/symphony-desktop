@@ -1,13 +1,16 @@
 import 'dart:io';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
+import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/main.dart';
 
 class SidebarWidget extends GetView<NavigationController> {
+  final PlayerController playerController = Get.find<PlayerController>();
   final List _items = [
     {
       "title": "symphony",
@@ -59,21 +62,21 @@ class SidebarWidget extends GetView<NavigationController> {
 
   SidebarWidget({super.key});
 
-  Widget _sidebarHeader() {
+  Widget _sidebarHeader(BuildContext context) {
     return Row(
-      children: const [
-        CircleAvatar(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const CircleAvatar(
           backgroundImage: NetworkImage(
             "https://c.tenor.com/ir2nX96xSJUAAAAC/ghosts-my-profile.gif",
           ),
           radius: 24,
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Text(
           "João Sereia",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ],
     );
@@ -172,20 +175,31 @@ class SidebarWidget extends GetView<NavigationController> {
     return Container(
       width: 240,
       color: kIsWeb
-          ? Theme.of(context).colorScheme.primary.withAlpha(255)
+          ? Theme.of(context).colorScheme.primary.withAlpha(40)
           : Platform.isLinux
               ? Theme.of(context).colorScheme.primary.withAlpha(200)
               : Theme.of(context).colorScheme.primary.withAlpha(0),
       child: Column(
         children: [
+          WindowTitleBarBox(
+            child: Expanded(
+              flex: 1,
+              child: MoveWindow(),
+            ),
+          ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(
+                top: 0,
+                bottom: 16,
+                left: 16,
+                right: 16,
+              ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    _sidebarHeader(),
+                    _sidebarHeader(context),
                     const SizedBox(height: 16),
                     _sidebarBody(),
                   ],
@@ -193,10 +207,13 @@ class SidebarWidget extends GetView<NavigationController> {
               ),
             ),
           ),
-          const Image(
-            width: 240,
-            image: NetworkImage(
-                "https://tracklist.com.br/wp-content/uploads/2021/04/olivia-debut.jpg"),
+          Obx(
+            () => Image(
+              width: 240,
+              height: 240,
+              fit: BoxFit.cover,
+              image: NetworkImage(playerController.getCurrentSong.albumArt),
+            ),
           ),
         ],
       ),

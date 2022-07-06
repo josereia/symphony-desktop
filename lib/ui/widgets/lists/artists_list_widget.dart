@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class HorizontalList extends StatelessWidget {
-  const HorizontalList({super.key});
+class ArtistsList extends StatelessWidget {
+  final String title;
+
+  const ArtistsList({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +14,12 @@ class HorizontalList extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                "Título",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
-              InkWell(
+              const InkWell(
                 child: Text("Ver Tudo"),
               ),
             ],
@@ -33,10 +35,11 @@ class HorizontalList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {},
+                  borderRadius: BorderRadius.circular(16),
                   child: Column(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(148),
                         child: const Image(
                           width: 148,
                           height: 148,
@@ -46,22 +49,15 @@ class HorizontalList extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 9 + 6),
                       SizedBox(
                         width: 148,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Título",
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const Text(
-                              "Artista",
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        child: Center(
+                          child: Text(
+                            "Título",
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
                       ),
                     ],

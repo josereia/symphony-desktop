@@ -22,7 +22,6 @@ class CircleButton extends StatelessWidget {
       focusElevation: 0,
       disabledElevation: 0,
       highlightElevation: 0,
-      splashColor: Theme.of(context).colorScheme.primary.withAlpha(40),
       shape: const CircleBorder(),
       fillColor: Theme.of(context).colorScheme.secondary.withAlpha(60),
       onPressed: onPressed,

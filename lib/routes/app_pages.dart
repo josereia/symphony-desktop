@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:symphony_desktop/bindings/database_binding.dart';
 import 'package:symphony_desktop/ui/pages/albums_page.dart';
 import 'package:symphony_desktop/ui/pages/artists_page.dart';
 import 'package:symphony_desktop/ui/pages/favorites_page.dart';
@@ -14,11 +15,13 @@ class AppPages {
       name: AppRoutes.initial,
       page: () => const HomePage(),
       transition: Transition.noTransition,
+      bindings: [DatabaseBinding()],
     ),
     GetPage(
       name: AppRoutes.home,
       page: () => const HomePage(),
       transition: Transition.noTransition,
+      bindings: [DatabaseBinding()],
     ),
     GetPage(
       name: AppRoutes.search,

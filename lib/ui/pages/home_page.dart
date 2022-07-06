@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:symphony_desktop/controllers/database_controller.dart';
 import 'package:symphony_desktop/ui/widgets/header_widget.dart';
-import 'package:symphony_desktop/ui/widgets/lists/horizontal_list_widget.dart';
+import 'package:symphony_desktop/ui/widgets/lists/albums_list_widget.dart';
+import 'package:symphony_desktop/ui/widgets/lists/artists_list_widget.dart';
+import 'package:symphony_desktop/ui/widgets/lists/songs_list_widget.dart';
 
-class HomePage extends GetView {
+class HomePage extends GetView<DatabaseController> {
   const HomePage({super.key});
 
   @override
@@ -12,20 +15,22 @@ class HomePage extends GetView {
       appBar: const HeaderWidget(title: "Início"),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(
+              top: 16 * 1.6, bottom: 100, left: 16 * 1.6, right: 16 * 1.6),
           child: Column(
-            children: const [
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
-              HorizontalList(),
+            children: [
+              const ArtistsList(
+                title: "Artistas",
+              ),
+              Obx(
+                () => SongsList(
+                  title: "Recomendados",
+                  data: controller.getSongsList,
+                ),
+              ),
+              const AlbumsList(
+                title: "Alguns álbuns",
+              ),
             ],
           ),
         ),
