@@ -18,42 +18,42 @@ class SidebarWidget extends GetView<NavigationController> {
         {
           "index": 0,
           "icon": FeatherIcons.home,
-          "title": 'Início',
+          "title": "home".tr,
           "route": AppRoutes.initial,
         },
         {
           "index": 1,
           "icon": FeatherIcons.search,
-          "title": 'Buscar',
+          "title": "search".tr,
           "route": AppRoutes.search,
         },
         {
           "index": 2,
           "icon": FeatherIcons.bookOpen,
-          "title": 'Biblioteca',
+          "title": "library".tr,
           "route": AppRoutes.library,
         }
       ]
     },
     {
-      "title": "Biblioteca",
+      "title": "library".tr,
       "items": [
         {
           "index": 3,
           "icon": FeatherIcons.disc,
-          "title": 'Álbuns',
+          "title": "albums".tr,
           "route": AppRoutes.albums,
         },
         {
           "index": 4,
           "icon": FeatherIcons.users,
-          "title": 'Artistas',
+          "title": "artists".tr,
           "route": AppRoutes.artists,
         },
         {
           "index": 5,
           "icon": FeatherIcons.heart,
-          "title": 'Favoritos',
+          "title": "favorites".tr,
           "route": AppRoutes.favorites,
         }
       ]

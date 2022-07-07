@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ArtistsList extends StatelessWidget {
   final String title;
@@ -19,8 +20,8 @@ class ArtistsList extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const InkWell(
-                child: Text("Ver Tudo"),
+              InkWell(
+                child: Text("view_more".tr),
               ),
             ],
           ),

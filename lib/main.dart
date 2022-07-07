@@ -5,14 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
-import 'package:symphony_desktop/bindings/navigation_binding.dart';
+import 'package:symphony_desktop/bindings/initial_binding.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
+import 'package:symphony_desktop/translations.dart';
 import 'package:symphony_desktop/ui/theme/app_theme.dart';
 import 'package:symphony_desktop/ui/widgets/base_widget.dart';
-import 'package:window_manager/window_manager.dart';
 
 final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
-
 Future<void> main() async {
   if (!kIsWeb) {
     DartVLC.initialize();
@@ -45,12 +44,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
+      initialBinding: InitialBinding(),
       builder: (context, child) => BaseWidget(child: child),
-      theme: LightTheme().getTheme(),
-      darkTheme: DarkTheme().getTheme(),
       navigatorKey: navigationKey,
+      theme: LightTheme().getTheme(),
+      //darkTheme: DarkTheme().getTheme(),
+      locale: Get.deviceLocale,
+      fallbackLocale: const Locale("pt", "BR"),
+      translations: Languages(),
       debugShowCheckedModeBanner: false,
-      initialBinding: NavigationBinding(),
     );
   }
 }

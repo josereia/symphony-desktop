@@ -19,17 +19,17 @@ class HomePage extends GetView<DatabaseController> {
               top: 16 * 1.6, bottom: 100, left: 16 * 1.6, right: 16 * 1.6),
           child: Column(
             children: [
-              const ArtistsList(
-                title: "Artistas",
+              ArtistsList(
+                title: "artists".tr,
               ),
               Obx(
                 () => SongsList(
-                  title: "Recomendados",
+                  title: "recommended".tr,
                   data: controller.getSongsList,
                 ),
               ),
-              const AlbumsList(
-                title: "Alguns álbuns",
+              AlbumsList(
+                title: "some_albums".tr,
               ),
             ],
           ),

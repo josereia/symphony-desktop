@@ -24,8 +24,8 @@ class SongsList extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const InkWell(
-                child: Text("Ver Tudo"),
+              InkWell(
+                child: Text("view_more".tr),
               ),
             ],
           ),

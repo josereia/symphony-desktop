@@ -43,7 +43,6 @@ dependencies:
   dart_vlc: ^0.3.0
   dart_vlc_ffi: ^0.1.8
   bitsdojo_window: ^0.1.2
-  window_manager: ^0.2.5
 
 dev_dependencies:
   flutter_test:
