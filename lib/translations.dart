@@ -25,6 +25,8 @@ class Languages extends Translations {
           "exit": "Sair",
           "favorites": "Favoritos",
           "view_more": "Ver tudo",
+          "confirm": "Confirmar",
+          "cancel": "Cancelar",
         },
         "en_US": {
           "good_morning": "Good Morning",
@@ -48,6 +50,8 @@ class Languages extends Translations {
           "exit": "Exit",
           "favorites": "Favorites",
           "view_more": "View more",
+          "confirm": "Confirm",
+          "cancel": "Cancel",
         }
       };
 }

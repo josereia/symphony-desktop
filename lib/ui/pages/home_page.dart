@@ -5,12 +5,14 @@ import 'package:symphony_desktop/ui/widgets/header_widget.dart';
 import 'package:symphony_desktop/ui/widgets/lists/albums_list_widget.dart';
 import 'package:symphony_desktop/ui/widgets/lists/artists_list_widget.dart';
 import 'package:symphony_desktop/ui/widgets/lists/songs_list_widget.dart';
+import 'package:symphony_desktop/updater.dart';
 
 class HomePage extends GetView<DatabaseController> {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AutoUpdater().checkForUpdates(context);
     return Scaffold(
       appBar: const HeaderWidget(title: "Início"),
       body: SingleChildScrollView(

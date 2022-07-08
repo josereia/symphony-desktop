@@ -1,0 +1,10 @@
+{
+    "name": "symphony",
+    "version": "0.0.1",
+    "description": [
+        ""
+    ],
+    "windows_path": "setups/symphony_setup.exe",
+    "linux_path": "setups/symphony_setup.sh",
+    "mac_path": "setups/symphony_setup.sh"
+}
