@@ -21,7 +21,7 @@ class AlertDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('AlertDialog Title'),
-      content: SingleChildScrollView(
+      content: SingleChildScrollView( 
         child: ListBody(
           children: const <Widget>[
             Text('This is a demo alert dialog.'),
