@@ -1,7 +1,7 @@
 {
     "name": "symphony",
     "version": "0.0.2",
-    "description": [
+    "changelog": [
         ""
     ],
     "windows_path": "setups/symphony_setup.exe",
