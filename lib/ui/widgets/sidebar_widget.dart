@@ -3,8 +3,8 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
@@ -20,19 +20,22 @@ class SidebarWidget extends GetView<NavigationController> {
       "items": [
         {
           "index": 0,
-          "icon": FeatherIcons.home,
+          "icon": Ionicons.home_outline,
+          "activeIcon": Ionicons.home,
           "title": "home".tr,
           "route": AppRoutes.initial,
         },
         {
           "index": 1,
-          "icon": FeatherIcons.search,
+          "icon": Ionicons.search_outline,
+          "activeIcon": Ionicons.search,
           "title": "search".tr,
           "route": AppRoutes.search,
         },
         {
           "index": 2,
-          "icon": FeatherIcons.bookOpen,
+          "icon": Ionicons.library_outline,
+          "activeIcon": Ionicons.library,
           "title": "library".tr,
           "route": AppRoutes.library,
         }
@@ -43,19 +46,22 @@ class SidebarWidget extends GetView<NavigationController> {
       "items": [
         {
           "index": 3,
-          "icon": FeatherIcons.disc,
+          "icon": Ionicons.disc_outline,
+          "activeIcon": Ionicons.disc,
           "title": "albums".tr,
           "route": AppRoutes.albums,
         },
         {
           "index": 4,
-          "icon": FeatherIcons.users,
+          "icon": Ionicons.people_outline,
+          "activeIcon": Ionicons.people,
           "title": "artists".tr,
           "route": AppRoutes.artists,
         },
         {
           "index": 5,
-          "icon": FeatherIcons.heart,
+          "icon": Ionicons.heart_outline,
+          "activeIcon": Ionicons.heart,
           "title": "favorites".tr,
           "route": AppRoutes.favorites,
         }
@@ -89,6 +95,7 @@ class SidebarWidget extends GetView<NavigationController> {
     Widget categoryItem({
       required BuildContext context,
       required IconData icon,
+      required IconData activeIcon,
       required String text,
       required int index,
       required String route,
@@ -126,7 +133,7 @@ class SidebarWidget extends GetView<NavigationController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  icon,
+                  controller.getCurrentRoute == route ? activeIcon : icon,
                   size: 18,
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
@@ -163,6 +170,8 @@ class SidebarWidget extends GetView<NavigationController> {
             itemBuilder: (context, categoryItemIndex) => categoryItem(
               context: context,
               icon: _items[categoryIndex]["items"][categoryItemIndex]["icon"],
+              activeIcon: _items[categoryIndex]["items"][categoryItemIndex]
+                  ["activeIcon"],
               text: _items[categoryIndex]["items"][categoryItemIndex]["title"],
               index: _items[categoryIndex]["items"][categoryItemIndex]["index"],
               route: _items[categoryIndex]["items"][categoryItemIndex]["route"],

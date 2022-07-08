@@ -1,7 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -51,7 +51,7 @@ class PlayerWidget extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(FeatherIcons.heart),
+                  icon: const Icon(Ionicons.heart_outline),
                 ),
               ],
             ),
@@ -78,15 +78,15 @@ class PlayerWidget extends StatelessWidget {
                               ? Theme.of(context).colorScheme.primary
                               : Theme.of(context).iconTheme.color,
                           icon: const Icon(
-                            FeatherIcons.shuffle,
-                            size: 18,
+                            Ionicons.shuffle_outline,
+                            size: 20,
                           ),
                         ),
                       ),
                       const SizedBox(width: 16),
                       IconButton(
                         onPressed: () => controller.previous(),
-                        icon: const Icon(FeatherIcons.skipBack),
+                        icon: const Icon(Ionicons.play_skip_back_outline),
                       ),
                       const SizedBox(width: 16),
                       Obx(
@@ -94,14 +94,14 @@ class PlayerWidget extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary,
                           onPressed: () => controller.playOrPause(),
                           icon: controller.getIsPlaying
-                              ? FeatherIcons.pause
-                              : FeatherIcons.play,
+                              ? Ionicons.pause_outline
+                              : Ionicons.play_outline,
                         ),
                       ),
                       const SizedBox(width: 16),
                       IconButton(
                         onPressed: () => controller.next(),
-                        icon: const Icon(FeatherIcons.skipForward),
+                        icon: const Icon(Ionicons.play_skip_forward_outline),
                       ),
                       const SizedBox(width: 16),
                       Obx(
@@ -111,8 +111,8 @@ class PlayerWidget extends StatelessWidget {
                               ? Theme.of(context).colorScheme.primary
                               : Theme.of(context).iconTheme.color,
                           icon: const Icon(
-                            FeatherIcons.repeat,
-                            size: 18,
+                            Ionicons.repeat_outline,
+                            size: 20,
                           ),
                         ),
                       ),
@@ -145,11 +145,11 @@ class PlayerWidget extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(FeatherIcons.list),
+                      icon: const Icon(Ionicons.list_outline),
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(FeatherIcons.speaker),
+                      icon: const Icon(Ionicons.radio_outline),
                     ),
                     Row(
                       children: [
@@ -158,17 +158,17 @@ class PlayerWidget extends StatelessWidget {
                             onPressed: () => controller.muteOrUnmute(),
                             icon: Icon(
                               controller.getVolume == 0
-                                  ? FeatherIcons.volumeX
+                                  ? Ionicons.volume_mute_outline
                                   : controller.getVolume > 0 &&
                                           controller.getVolume <= 0.2
-                                      ? FeatherIcons.volume
+                                      ? Ionicons.volume_off_outline
                                       : controller.getVolume > 0.2 &&
                                               controller.getVolume <= 0.5
-                                          ? FeatherIcons.volume1
+                                          ? Ionicons.volume_low_outline
                                           : controller.getVolume > 0.5 &&
-                                                  controller.getVolume >= 1.0
-                                              ? FeatherIcons.volume2
-                                              : FeatherIcons.volume2,
+                                                  controller.getVolume <= 0.8
+                                              ? Ionicons.volume_medium_outline
+                                              : Ionicons.volume_high_outline,
                             ),
                           ),
                         ),
@@ -188,7 +188,6 @@ class PlayerWidget extends StatelessWidget {
                                 value: controller.getVolume,
                                 onChanged: (dynamic value) =>
                                     controller.setVolume(value),
-                                    
                               ),
                             ),
                           ),

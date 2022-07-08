@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
@@ -24,12 +24,12 @@ class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleButton(
-                icon: FeatherIcons.chevronLeft,
+                icon: Ionicons.chevron_back_outline,
                 onPressed: () => Get.back(),
               ),
               const SizedBox(width: 16 / 2),
               const CircleButton(
-                icon: FeatherIcons.chevronRight,
+                icon: Ionicons.chevron_forward_outline,
               ),
             ],
           )
