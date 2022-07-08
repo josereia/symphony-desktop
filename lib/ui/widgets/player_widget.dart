@@ -188,6 +188,7 @@ class PlayerWidget extends StatelessWidget {
                                 value: controller.getVolume,
                                 onChanged: (dynamic value) =>
                                     controller.setVolume(value),
+                                    
                               ),
                             ),
                           ),
