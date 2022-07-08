@@ -3,6 +3,7 @@
 <h2 align="center">
   <p><img src="assets/logo.png"></p>
   symphony
+  <p></p>
 </h2>
 
 <p>
@@ -22,11 +23,16 @@ Um music player inspirado no spotify, deezer e apple music.
 > A music player via streaming like Spotify and Deezer.
 
 ## 🧰 Tecnologias usadas
+>Até o momento.
 - Flutter
 - Dart 
 - GetX 
 - DartVLC
 - Firebase
+
+## :computer: Plataformas suportadas
+>Até o momento.
+<img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
 
 ## 📷 Imagem do projeto
 >Até o momento.
