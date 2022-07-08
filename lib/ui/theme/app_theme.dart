@@ -32,7 +32,12 @@ class LightTheme {
   );
 
   ThemeData getTheme() {
-    return theme.copyWith(iconTheme: const IconThemeData(size: 20));
+    return theme.copyWith(
+      iconTheme: IconThemeData(
+        size: 20,
+        color: theme.colorScheme.onBackground,
+      ),
+    );
   }
 }
 

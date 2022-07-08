@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
@@ -48,10 +49,10 @@ class SongsList extends StatelessWidget {
                         child: Image(
                           width: 148,
                           height: 148,
-                          image: NetworkImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
                             data[index].albumArt,
                           ),
-                          fit: BoxFit.cover,
                         ),
                       ),
                       const SizedBox(height: 6),

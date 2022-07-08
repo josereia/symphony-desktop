@@ -8,7 +8,7 @@ class SongDataProvider {
     return "https://res.cloudinary.com/joaosereia/image/upload/v1646315355/albums/$album.jpg";
   }
 
-  String getArtistPicURL(String artist) {
+  String getArtistProfilePicURL(String artist) {
     return "https://res.cloudinary.com/joaosereia/image/upload/v1646147011/profile_images/$artist.jpg";
   }
 }

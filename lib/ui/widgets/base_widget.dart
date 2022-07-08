@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/widgets/player_widget.dart';
 import 'package:symphony_desktop/ui/widgets/sidebar_widget.dart';
 
+
 class BaseWidget extends StatelessWidget {
   final Widget? child;
 
@@ -56,7 +57,7 @@ class BaseWidget extends StatelessWidget {
                   child: Stack(
                     children: [
                       child ?? Container(),
-                      const Positioned(
+                      Positioned(
                         left: 0,
                         right: 0,
                         bottom: 0,

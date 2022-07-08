@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -8,9 +9,11 @@ import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/main.dart';
+import 'package:http/http.dart' as http;
 
 class SidebarWidget extends GetView<NavigationController> {
   final PlayerController playerController = Get.find<PlayerController>();
+
   final List _items = [
     {
       "title": "symphony",
@@ -170,6 +173,11 @@ class SidebarWidget extends GetView<NavigationController> {
     );
   }
 
+  Future loadImage(String url) async {
+    final response = await http.get(Uri.parse(url));
+    return response.bodyBytes;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -182,9 +190,12 @@ class SidebarWidget extends GetView<NavigationController> {
       child: Column(
         children: [
           WindowTitleBarBox(
-            child: Expanded(
-              flex: 1,
-              child: MoveWindow(),
+            child: Row(
+              children: [
+                Expanded(
+                  child: MoveWindow(),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -212,7 +223,10 @@ class SidebarWidget extends GetView<NavigationController> {
               width: 240,
               height: 240,
               fit: BoxFit.cover,
-              image: NetworkImage(playerController.getCurrentSong.albumArt),
+              gaplessPlayback: true,
+              image: CachedNetworkImageProvider(
+                playerController.getCurrentSong.albumArt,
+              ),
             ),
           ),
         ],

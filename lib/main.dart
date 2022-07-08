@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
@@ -49,6 +50,14 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigationKey,
       theme: LightTheme().getTheme(),
       //darkTheme: DarkTheme().getTheme(),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown
+        },
+      ),
       locale: Get.deviceLocale,
       fallbackLocale: const Locale("pt", "BR"),
       translations: Languages(),

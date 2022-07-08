@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
@@ -10,6 +11,8 @@ class PlayerController extends GetxController {
   final RxBool _isPlaying = false.obs;
   final RxBool _isShuffle = false.obs;
   final RxBool _isLoop = false.obs;
+  final RxBool _isMuted = false.obs;
+  final RxDouble _volume = 1.0.obs;
   final Rx<SongModel> _currentSong = SongModel(
     title: "",
     artists: [""],
@@ -36,8 +39,10 @@ class PlayerController extends GetxController {
   bool get getIsPlaying => _isPlaying.value;
   bool get getIsShuffle => _isShuffle.value;
   bool get getIsLoop => _isLoop.value;
+  bool get getIsMuted => _isMuted.value;
+  double get getVolume => _volume.value;
   SongModel get getCurrentSong => _currentSong.value;
-  List<SongModel> get getSongs => _songs;
+  //List<SongModel> get getSongs => _songs;
 
   @override
   void onInit() {
@@ -54,21 +59,31 @@ class PlayerController extends GetxController {
     _audioPlayer.bufferingProgressStream.listen((double bufferedPosition) {
       _bufferedPosition.value = bufferedPosition.milliseconds;
     });
+    _audioPlayer.generalStream.listen((GeneralState state) {
+      _volume.value = state.volume;
+    });
 
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    _audioPlayer.dispose();
+    super.onClose();
+  }
+
   void play(List<SongModel> songs, int index, String playlistTitle) {
-    _songs.value = songs;
+    _songs.value = songs.toList();
     _audioPlayer.open(
+      autoStart: false,
       Playlist(
+        playlistMode: PlaylistMode.loop,
         medias: songs
             .map(
               (song) => Media.network(song.songUrl),
             )
             .toList(),
       ),
-      autoStart: false,
     );
     _audioPlayer.play();
     _audioPlayer.jumpToIndex(index);
@@ -78,8 +93,34 @@ class PlayerController extends GetxController {
     _audioPlayer.playOrPause();
   }
 
+  void setRepeat() {
+    if (_isLoop.value) {
+      _audioPlayer.setPlaylistMode(PlaylistMode.loop);
+    } else {
+      _audioPlayer.setPlaylistMode(PlaylistMode.repeat);
+    }
+    _isLoop.value = !_isLoop.value;
+  }
+
+  void setShuffle() {
+    _isShuffle.value = !_isShuffle.value;
+  }
+
+  void muteOrUnmute() {
+    if (_volume.value != 0) {
+      _audioPlayer.setVolume(0);
+    } else {
+      _audioPlayer.setVolume(1);
+    }
+  }
+
   void next() {
-    _audioPlayer.next();
+    if (_isShuffle.value) {
+      final int random = Random().nextInt(_songs.length);
+      _audioPlayer.jumpToIndex(random);
+    } else {
+      _audioPlayer.next();
+    }
   }
 
   void previous() {
@@ -88,5 +129,9 @@ class PlayerController extends GetxController {
 
   void seek(Duration position) {
     _audioPlayer.seek(position);
+  }
+
+  void setVolume(double volume) {
+    _audioPlayer.setVolume(volume);
   }
 }

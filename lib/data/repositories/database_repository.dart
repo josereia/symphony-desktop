@@ -2,12 +2,12 @@ import 'package:symphony_desktop/data/models/song_model.dart';
 import 'package:symphony_desktop/data/providers/database_provider.dart';
 
 class DatabaseRepository {
-  final DatabaseProvider database;
+  final DatabaseProvider provider;
 
-  DatabaseRepository(this.database);
+  DatabaseRepository(this.provider);
 
   Future<List<SongModel>> getSongs() async {
-    return await database.getSongs();
+    return await provider.getSongs();
   }
 
   /*
