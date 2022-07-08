@@ -25,7 +25,8 @@ class SongsList extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              InkWell(
+              TextButton(
+                onPressed: () => {},
                 child: Text("view_more".tr),
               ),
             ],

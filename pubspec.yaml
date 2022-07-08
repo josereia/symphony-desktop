@@ -47,6 +47,8 @@ dependencies:
   http: ^0.13.4
   cached_network_image: ^3.2.1
   ionicons: ^0.1.2
+  dio: ^4.0.6
+  path_provider: ^2.0.11
 
 dev_dependencies:
   flutter_test:

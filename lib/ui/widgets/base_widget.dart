@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/widgets/player_widget.dart';
 import 'package:symphony_desktop/ui/widgets/sidebar_widget.dart';
 
-
 class BaseWidget extends StatelessWidget {
   final Widget? child;
 
