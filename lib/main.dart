@@ -16,12 +16,21 @@ NavigatorState? get navigation => _navigationKey.currentState;
 
 Future<void> main() async {
   if (!kIsWeb) {
+    final bool isWindows11 = int.parse(
+          Platform.operatingSystemVersion
+              .split("Build ")[1]
+              .replaceAll(")", ""),
+        ) >
+        22523;
     DartVLC.initialize();
     WidgetsFlutterBinding.ensureInitialized();
     await Window.initialize();
     await Window.setEffect(
-      effect:
-          Platform.isWindows ? WindowEffect.tabbed : WindowEffect.transparent,
+      effect: Platform.isWindows
+          ? isWindows11
+              ? WindowEffect.tabbed
+              : WindowEffect.acrylic
+          : WindowEffect.transparent,
       dark: false,
       /*dark: SchedulerBinding.instance.window.platformBrightness ==
           Brightness.dark*/
