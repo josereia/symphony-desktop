@@ -10,11 +10,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:symphony_desktop/ui/widgets/alert_dialog_widget.dart';
 
 class AutoUpdater {
+  final BuildContext context;
   static const String currentVersion = "0.0.1";
   static const String githubURL =
       'https://raw.githubusercontent.com/josereia/symphony-desktop/main/';
 
-  AutoUpdater();
+  AutoUpdater({required this.context});
 
   Future<Map<String, dynamic>> _getVersionData() async {
     return await http
@@ -24,7 +25,30 @@ class AutoUpdater {
     });
   }
 
-  Future<void> checkForUpdates(BuildContext context) async {
+  void _quitAndInstall(String filepath) async {
+    await Process.start(filepath, ["-t", "-l", "1000"]).then((value) {
+      SystemNavigator.pop();
+      exit(0);
+    });
+  }
+
+  Future _downloadNewVersion(String path) async {
+    final Dio dio = Dio();
+    final filename = path.split("/").last;
+
+    await getApplicationDocumentsDirectory().then((dir) {
+      final file = File("${dir.path}/$filename");
+      dio.download(
+        "$githubURL$path",
+        file.path,
+        onReceiveProgress: (int received, int total) {
+          log("$received/$total");
+        },
+      ).then((value) => _quitAndInstall(file.path));
+    });
+  }
+
+  Future<void> checkForUpdates() async {
     await _getVersionData().then(
       (data) {
         if (data['version'] != currentVersion) {
@@ -46,7 +70,7 @@ class AutoUpdater {
                 ),
               ),
               confirmButtonText: "update".tr,
-              confirmButtonAction: () => downloadNewVersion(
+              confirmButtonAction: () => _downloadNewVersion(
                 data['windows_path'],
               ),
             ),
@@ -54,27 +78,5 @@ class AutoUpdater {
         }
       },
     );
-  }
-
-  Future downloadNewVersion(String path) async {
-    final Dio dio = Dio();
-    final filename = path.split("/").last;
-
-    await getApplicationDocumentsDirectory().then((dir) {
-      final file = File("${dir.path}/$filename");
-      dio.download(
-        path,
-        file.path,
-        onReceiveProgress: (int received, int total) {
-          log("$received/$total");
-        },
-      ).then((value) => quitAndInstall(file.path));
-    });
-  }
-
-  void quitAndInstall(String filepath) async {
-    await Process.start(filepath, ["-t", "-l", "1000"]).then((value) {
-      SystemNavigator.pop();
-    });
   }
 }

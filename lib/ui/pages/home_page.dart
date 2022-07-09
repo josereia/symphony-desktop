@@ -12,7 +12,7 @@ class HomePage extends GetView<DatabaseController> {
 
   @override
   Widget build(BuildContext context) {
-    AutoUpdater().checkForUpdates(context);
+    AutoUpdater(context: context).checkForUpdates();
     return Scaffold(
       appBar: const HeaderWidget(title: "Início"),
       body: SingleChildScrollView(
