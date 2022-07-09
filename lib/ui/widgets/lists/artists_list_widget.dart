@@ -1,72 +1,41 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:symphony_desktop/data/models/song_model.dart';
+import 'package:symphony_desktop/ui/widgets/lists/horizontal_list_widget.dart';
 
-class ArtistsList extends StatelessWidget {
-  final String title;
+class ArtistsList extends HorizontalList {
+  final List<SongModel> data;
 
-  const ArtistsList({super.key, required this.title});
+  ArtistsList({super.key, required super.title, required this.data})
+      : super(itemCount: data.length > 1 ? 10 : 0);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 60),
+  Widget item({required BuildContext context, required int index}) {
+    return InkWell(
+      onTap: () {},
+      borderRadius: BorderRadius.circular(16),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headlineSmall,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(148),
+            child: Image(
+              width: 148,
+              height: 148,
+              fit: BoxFit.cover,
+              image: CachedNetworkImageProvider(
+                data[index].albumArt,
               ),
-              TextButton(
-                onPressed: () => {},
-                child: Text("view_more".tr),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 9 + 6),
           SizedBox(
-            height: 200,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              separatorBuilder: (BuildContext context, int index) =>
-                  const SizedBox(width: 16),
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(16),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(148),
-                        child: const Image(
-                          width: 148,
-                          height: 148,
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            "https://tracklist.com.br/wp-content/uploads/2021/04/olivia-debut.jpg",
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 9 + 6),
-                      SizedBox(
-                        width: 148,
-                        child: Center(
-                          child: Text(
-                            "Título",
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            width: 148,
+            child: Center(
+              child: Text(
+                data[index].artists[0],
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
         ],

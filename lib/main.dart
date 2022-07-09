@@ -1,18 +1,19 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
+import 'package:symphony_desktop/app.dart';
 import 'package:symphony_desktop/bindings/initial_binding.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/translations.dart';
 import 'package:symphony_desktop/ui/theme/app_theme.dart';
-import 'package:symphony_desktop/ui/widgets/base_widget.dart';
 
-final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
+NavigatorState? get navigation => _navigationKey.currentState;
+
 Future<void> main() async {
   if (!kIsWeb) {
     DartVLC.initialize();
@@ -46,18 +47,10 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
       initialBinding: InitialBinding(),
-      builder: (context, child) => BaseWidget(child: child),
-      navigatorKey: navigationKey,
+      builder: (context, child) => AppBuilderWidget(child: child),
+      navigatorKey: _navigationKey,
       theme: LightTheme().getTheme(),
       //darkTheme: DarkTheme().getTheme(),
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown
-        },
-      ),
       locale: Get.deviceLocale,
       fallbackLocale: const Locale("pt", "BR"),
       translations: Languages(),

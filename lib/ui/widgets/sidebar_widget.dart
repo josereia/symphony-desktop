@@ -9,11 +9,9 @@ import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/main.dart';
-import 'package:http/http.dart' as http;
 
 class SidebarWidget extends GetView<NavigationController> {
   final PlayerController playerController = Get.find<PlayerController>();
-
   final List _items = [
     {
       "title": "symphony",
@@ -72,85 +70,100 @@ class SidebarWidget extends GetView<NavigationController> {
   SidebarWidget({super.key});
 
   Widget _sidebarHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
       children: [
-        const CircleAvatar(
-          backgroundImage: NetworkImage(
-            "https://c.tenor.com/ir2nX96xSJUAAAAC/ghosts-my-profile.gif",
+        WindowTitleBarBox(
+          child: Row(
+            children: [
+              Expanded(
+                child: MoveWindow(),
+              ),
+            ],
           ),
-          radius: 24,
         ),
-        const SizedBox(width: 16),
-        Text(
-          "João Sereia",
-          style: Theme.of(context).textTheme.titleMedium,
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                backgroundImage: NetworkImage(
+                  "https://c.tenor.com/ir2nX96xSJUAAAAC/ghosts-my-profile.gif",
+                ),
+                radius: 24,
+              ),
+              const SizedBox(width: 16),
+              Text(
+                "João Sereia",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 
-  Widget _sidebarBody() {
-    Widget categoryItem({
-      required BuildContext context,
-      required IconData icon,
-      required IconData activeIcon,
-      required String text,
-      required int index,
-      required String route,
-    }) {
-      return Obx(
-        () => InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            Get.toNamed(route);
-            navigationKey.currentState?.popUntil((route) {
-              controller.setCurrentRoute(route.settings.name);
-              return true;
-            });
-          },
-          child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: controller.getCurrentRoute == route
-                      ? Colors.black.withAlpha(16)
-                      : Colors.transparent,
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              color: controller.getCurrentRoute == route
-                  ? Theme.of(context).colorScheme.background
-                  : Colors.transparent,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  controller.getCurrentRoute == route ? activeIcon : icon,
-                  size: 18,
+  Widget _categoryItem({
+    required BuildContext context,
+    required IconData icon,
+    required IconData activeIcon,
+    required String text,
+    required int index,
+    required String route,
+  }) {
+    return Obx(
+      () => InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          Get.toNamed(route);
+          navigation?.popUntil((route) {
+            controller.setCurrentRoute(route.settings.name);
+            return true;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: controller.getCurrentRoute == route
+                    ? Colors.black.withAlpha(16)
+                    : Colors.transparent,
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+            color: controller.getCurrentRoute == route
+                ? Theme.of(context).colorScheme.background
+                : Colors.transparent,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                controller.getCurrentRoute == route ? activeIcon : icon,
+                size: 18,
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+              const SizedBox(width: 16),
+              Text(
+                text,
+                style: TextStyle(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),
-                const SizedBox(width: 16),
-                Text(
-                  text,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
+  Widget _sidebarBody() {
     return ListView.separated(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -167,7 +180,7 @@ class SidebarWidget extends GetView<NavigationController> {
             shrinkWrap: true,
             itemCount: _items[categoryIndex]["items"].length,
             separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemBuilder: (context, categoryItemIndex) => categoryItem(
+            itemBuilder: (context, categoryItemIndex) => _categoryItem(
               context: context,
               icon: _items[categoryIndex]["items"][categoryItemIndex]["icon"],
               activeIcon: _items[categoryIndex]["items"][categoryItemIndex]
@@ -182,11 +195,6 @@ class SidebarWidget extends GetView<NavigationController> {
     );
   }
 
-  Future loadImage(String url) async {
-    final response = await http.get(Uri.parse(url));
-    return response.bodyBytes;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -198,15 +206,7 @@ class SidebarWidget extends GetView<NavigationController> {
               : Theme.of(context).colorScheme.primary.withAlpha(0),
       child: Column(
         children: [
-          WindowTitleBarBox(
-            child: Row(
-              children: [
-                Expanded(
-                  child: MoveWindow(),
-                ),
-              ],
-            ),
-          ),
+          _sidebarHeader(context),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -215,26 +215,20 @@ class SidebarWidget extends GetView<NavigationController> {
                 left: 16,
                 right: 16,
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    _sidebarHeader(context),
-                    const SizedBox(height: 16),
-                    _sidebarBody(),
-                  ],
-                ),
-              ),
+              child: _sidebarBody(),
             ),
           ),
           Obx(
-            () => Image(
-              width: 240,
-              height: 240,
-              fit: BoxFit.cover,
-              gaplessPlayback: true,
-              image: CachedNetworkImageProvider(
-                playerController.getCurrentSong.albumArt,
+            () => Visibility(
+              visible: playerController.getCurrentSong.albumArt != "",
+              child: Image(
+                width: 240,
+                height: 240,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                image: CachedNetworkImageProvider(
+                  playerController.getCurrentSong.albumArt,
+                ),
               ),
             ),
           ),

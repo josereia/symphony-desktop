@@ -17,8 +17,7 @@ class PlayerController extends GetxController {
     title: "",
     artists: [""],
     album: "",
-    albumArt:
-        "http://static1.squarespace.com/static/5d2e2c5ef24531000113c2a4/5d392a924397f100011fa30e/5d447e71b57a0b0001e64e19/1579825897991/?format=1500w",
+    albumArt: "",
     songUrl: "",
     duration: 0,
   ).obs;
@@ -42,7 +41,6 @@ class PlayerController extends GetxController {
   bool get getIsMuted => _isMuted.value;
   double get getVolume => _volume.value;
   SongModel get getCurrentSong => _currentSong.value;
-  //List<SongModel> get getSongs => _songs;
 
   @override
   void onInit() {

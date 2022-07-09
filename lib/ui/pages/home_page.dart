@@ -21,8 +21,9 @@ class HomePage extends GetView<DatabaseController> {
               top: 16 * 1.6, bottom: 100, left: 16 * 1.6, right: 16 * 1.6),
           child: Column(
             children: [
-              ArtistsList(
-                title: "artists".tr,
+              Obx(
+                () => ArtistsList(
+                    title: "artists".tr, data: controller.getSongsList),
               ),
               Obx(
                 () => SongsList(
@@ -30,8 +31,11 @@ class HomePage extends GetView<DatabaseController> {
                   data: controller.getSongsList,
                 ),
               ),
-              AlbumsList(
-                title: "some_albums".tr,
+              Obx(
+                () => AlbumsList(
+                  title: "some_albums".tr,
+                  data: controller.getSongsList,
+                ),
               ),
             ],
           ),
