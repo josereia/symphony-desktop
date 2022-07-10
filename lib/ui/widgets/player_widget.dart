@@ -91,7 +91,9 @@ class PlayerWidget extends StatelessWidget {
                       const SizedBox(width: 16),
                       Obx(
                         () => CircleButton(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           onPressed: () => controller.playOrPause(),
                           icon: controller.getIsPlaying
                               ? Ionicons.pause_outline
@@ -181,10 +183,25 @@ class PlayerWidget extends StatelessWidget {
                                 overlayRadius: 6,
                                 activeTrackHeight: 5,
                                 inactiveTrackHeight: 5,
+                                tooltipBackgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                tooltipTextStyle: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                    ),
                               ),
                               child: SfSlider(
                                 min: 0.0,
                                 max: 1.0,
+                                enableTooltip: true,
+                                tooltipTextFormatterCallback: (actualValue,
+                                        formattedText) =>
+                                    (actualValue * 100.0).toStringAsFixed(0) +
+                                    "%",
                                 value: controller.getVolume,
                                 onChanged: (dynamic value) =>
                                     controller.setVolume(value),
