@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/widgets/player_widget.dart';
@@ -7,6 +9,38 @@ class AppBuilderWidget extends StatelessWidget {
   final Widget? child;
 
   const AppBuilderWidget({super.key, required this.child});
+
+  Widget _header(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: WindowTitleBarBox(
+        child: Row(
+          children: [
+            Expanded(child: MoveWindow()),
+            Row(
+              children: [
+                MinimizeWindowButton(
+                  colors: WindowButtonColors(
+                    iconNormal: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+                MaximizeWindowButton(
+                  colors: WindowButtonColors(
+                    iconNormal: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+                CloseWindowButton(
+                  colors: WindowButtonColors(
+                    iconNormal: Theme.of(context).colorScheme.onBackground,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,38 +53,7 @@ class AppBuilderWidget extends StatelessWidget {
             flex: 1,
             child: Column(
               children: [
-                Container(
-                  color: Theme.of(context).colorScheme.background,
-                  child: WindowTitleBarBox(
-                    child: Row(
-                      children: [
-                        Expanded(child: MoveWindow()),
-                        Row(
-                          children: [
-                            MinimizeWindowButton(
-                              colors: WindowButtonColors(
-                                iconNormal:
-                                    Theme.of(context).colorScheme.onBackground,
-                              ),
-                            ),
-                            MaximizeWindowButton(
-                              colors: WindowButtonColors(
-                                iconNormal:
-                                    Theme.of(context).colorScheme.onBackground,
-                              ),
-                            ),
-                            CloseWindowButton(
-                              colors: WindowButtonColors(
-                                iconNormal:
-                                    Theme.of(context).colorScheme.onBackground,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                Platform.isWindows ? _header(context) : Container(),
                 Expanded(
                   flex: 1,
                   child: Stack(

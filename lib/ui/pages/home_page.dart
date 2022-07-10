@@ -25,12 +25,14 @@ class HomePage extends GetView<DatabaseController> {
                 () => ArtistsList(
                     title: "artists".tr, data: controller.getSongsList),
               ),
+              const SizedBox(height: 40),
               Obx(
                 () => SongsList(
                   title: "recommended".tr,
                   data: controller.getSongsList,
                 ),
               ),
+              const SizedBox(height: 40),
               Obx(
                 () => AlbumsList(
                   title: "some_albums".tr,

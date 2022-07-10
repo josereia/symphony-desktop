@@ -42,7 +42,6 @@ class HorizontalList extends StatelessWidget {
           child: Scrollbar(
             controller: _scrollController,
             interactive: true,
-            thumbVisibility: true,
             child: ListView.separated(
               controller: _scrollController,
               padding: const EdgeInsets.only(bottom: 16),

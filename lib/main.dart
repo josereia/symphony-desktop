@@ -16,12 +16,12 @@ NavigatorState? get navigation => _navigationKey.currentState;
 
 Future<void> main() async {
   if (!kIsWeb) {
-    final bool isWindows11 = int.parse(
+    final bool isWindows11 = Platform.isWindows ? int.parse(
           Platform.operatingSystemVersion
               .split("Build ")[1]
               .replaceAll(")", ""),
         ) >
-        22523;
+        22523 : false;
     DartVLC.initialize();
     WidgetsFlutterBinding.ensureInitialized();
     await Window.initialize();
@@ -35,7 +35,7 @@ Future<void> main() async {
       /*dark: SchedulerBinding.instance.window.platformBrightness ==
           Brightness.dark*/
     );
-    await Window.hideWindowControls();
+    Platform.isWindows ? await Window.hideWindowControls() : null;
     runApp(const MyApp());
     doWhenWindowReady(() {
       const initialSize = Size(1280, 800);

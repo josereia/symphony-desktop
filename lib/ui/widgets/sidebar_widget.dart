@@ -72,15 +72,17 @@ class SidebarWidget extends GetView<NavigationController> {
   Widget _sidebarHeader(BuildContext context) {
     return Column(
       children: [
-        WindowTitleBarBox(
-          child: Row(
-            children: [
-              Expanded(
-                child: MoveWindow(),
-              ),
-            ],
-          ),
-        ),
+        Platform.isWindows
+            ? WindowTitleBarBox(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: MoveWindow(),
+                    ),
+                  ],
+                ),
+              )
+            : Container(),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
@@ -197,13 +199,17 @@ class SidebarWidget extends GetView<NavigationController> {
 
   @override
   Widget build(BuildContext context) {
+    final Color color = Theme.of(context).brightness == Brightness.dark
+        ? const Color(0xff2f2e34)
+        : const Color(0xFFECECEC);
+
     return Container(
       width: 240,
       color: kIsWeb
           ? Theme.of(context).colorScheme.primary.withAlpha(40)
           : Platform.isLinux
-              ? Theme.of(context).colorScheme.primary.withAlpha(200)
-              : Theme.of(context).colorScheme.primary.withAlpha(0),
+              ? color.withAlpha(246)
+              : Colors.transparent,
       child: Column(
         children: [
           _sidebarHeader(context),
