@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/controllers/database_controller.dart';
@@ -12,7 +14,7 @@ class HomePage extends GetView<DatabaseController> {
 
   @override
   Widget build(BuildContext context) {
-    AutoUpdater(context: context).checkForUpdates();
+    Platform.isWindows ? AutoUpdater(context: context).checkForUpdates() : null;
     return Scaffold(
       appBar: const HeaderWidget(),
       body: SingleChildScrollView(

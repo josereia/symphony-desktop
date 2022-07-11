@@ -1,8 +1,9 @@
 {
     "name": "symphony",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "changelog": [
-        ""
+        "Melhorias no desenho da interface.",
+        "Página de ver mais ao clicar na lista."
     ],
     "windows_path": "setups/symphony_setup.exe",
     "linux_path": "setups/symphony_setup.sh",
