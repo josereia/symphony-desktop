@@ -32,7 +32,10 @@ Um music player inspirado no spotify, deezer e apple music.
 
 ## :computer: Plataformas suportadas
 >Até o momento.
-<img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
+<p>
+  <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+</p>
 
 ## 📷 Imagem do projeto
 >Até o momento.
