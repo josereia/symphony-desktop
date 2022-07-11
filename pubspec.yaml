@@ -49,6 +49,7 @@ dependencies:
   ionicons: ^0.1.2
   dio: ^4.0.6
   path_provider: ^2.0.11
+  responsive_grid_list: ^1.2.4
 
 dev_dependencies:
   flutter_test:

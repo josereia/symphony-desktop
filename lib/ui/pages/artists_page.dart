@@ -8,7 +8,7 @@ class ArtistsPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: HeaderWidget(title: "Artistas"),
+      appBar: HeaderWidget(),
       body: Center(
         child: Text('Artistas'),
       ),

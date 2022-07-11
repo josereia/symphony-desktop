@@ -8,7 +8,7 @@ class SearchPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: HeaderWidget(title: "Buscar"),
+      appBar: HeaderWidget(),
       body: Center(
         child: Text('Buscar'),
       ),

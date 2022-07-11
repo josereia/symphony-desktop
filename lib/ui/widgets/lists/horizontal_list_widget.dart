@@ -18,6 +18,10 @@ class HorizontalList extends StatelessWidget {
     return Container();
   }
 
+  void seeMoreAction() {
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +35,7 @@ class HorizontalList extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             TextButton(
-              onPressed: () => {},
+              onPressed: () => seeMoreAction(),
               child: Text("view_more".tr),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
 import 'package:symphony_desktop/ui/widgets/lists/horizontal_list_widget.dart';
 
@@ -41,5 +42,10 @@ class ArtistsList extends HorizontalList {
         ],
       ),
     );
+  }
+
+  @override
+  void seeMoreAction() {
+    Get.toNamed("/seeMore", arguments: [title, data, item]);
   }
 }

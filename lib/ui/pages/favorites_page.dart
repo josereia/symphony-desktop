@@ -8,7 +8,7 @@ class FavoritesPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: HeaderWidget(title: "Favoritos"),
+      appBar: HeaderWidget(),
       body: Center(
         child: Text('Favoritos'),
       ),

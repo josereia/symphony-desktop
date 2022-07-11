@@ -8,7 +8,7 @@ class AlbumsPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: HeaderWidget(title: "Álbuns"),
+      appBar: HeaderWidget(),
       body: Center(
         child: Text('Álbuns'),
       ),

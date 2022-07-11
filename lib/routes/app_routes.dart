@@ -8,4 +8,5 @@ abstract class AppRoutes {
   static const albums = "/albums";
   static const artists = "/artists";
   static const favorites = "/favorites";
+  static const seeMore = "/seeMore";
 }

@@ -4,12 +4,12 @@ import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
-  final String title;
+  final String? title;
 
   @override
   final Size preferredSize = const Size.fromHeight(100);
 
-  const HeaderWidget({super.key, required this.title});
+  const HeaderWidget({super.key, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,20 @@ class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleButton(
-                icon: Ionicons.chevron_back_outline,
-                onPressed: () => Get.back(),
+              Row(
+                children: [
+                  CircleButton(
+                    icon: Ionicons.chevron_back_outline,
+                    onPressed: () => Get.back(),
+                  ),
+                  const SizedBox(width: 16 / 2),
+                  const CircleButton(
+                    icon: Ionicons.chevron_forward_outline,
+                  ),
+                ],
               ),
-              const SizedBox(width: 16 / 2),
-              const CircleButton(
-                icon: Ionicons.chevron_forward_outline,
-              ),
+              const SizedBox(width: 16),
+              Text(title ?? "", style: Theme.of(context).textTheme.headlineLarge),
             ],
           )
         ],

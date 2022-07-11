@@ -8,7 +8,7 @@ class LibraryPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: HeaderWidget(title: "Biblioteca"),
+      appBar: HeaderWidget(),
       body: Center(
         child: Text('Biblioteca'),
       ),

@@ -3,7 +3,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/app.dart';
@@ -41,9 +40,11 @@ Future<void> main() async {
     await Window.initialize();
 
     await Window.setEffect(
-        effect: _getWindowEffect(),
-        dark: SchedulerBinding.instance.window.platformBrightness ==
-            Brightness.dark);
+      effect: _getWindowEffect(),
+      dark: false,
+      /*dark: SchedulerBinding.instance.window.platformBrightness ==
+            Brightness.dark*/
+    );
 
     if (Platform.isWindows) {
       await Window.hideWindowControls();
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => AppBuilderWidget(child: child),
       navigatorKey: _navigationKey,
       theme: LightTheme().getTheme(),
-      darkTheme: DarkTheme().getTheme(),
+      //darkTheme: DarkTheme().getTheme(),
       locale: Get.deviceLocale,
       fallbackLocale: const Locale("pt", "BR"),
       translations: Languages(),

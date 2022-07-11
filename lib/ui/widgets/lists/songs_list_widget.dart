@@ -52,4 +52,9 @@ class SongsList extends HorizontalList {
       ),
     );
   }
+
+  @override
+  void seeMoreAction() {
+    Get.toNamed("/seeMore", arguments: [title, data, item]);
+  }
 }
