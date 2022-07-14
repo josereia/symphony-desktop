@@ -1,7 +1,7 @@
 <p align="center">:construction: Projeto em desenvolvimento !! :construction:</p>
 
 <h2 align="center">
-  <p><img src="assets/logo.png"></p>
+  <p><img width="200px" src="assets/logo.png"></p>
   symphony
   <p></p>
 </h2>
