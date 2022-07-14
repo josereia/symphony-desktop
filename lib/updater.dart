@@ -11,7 +11,7 @@ import 'package:symphony_desktop/ui/widgets/alert_dialog_widget.dart';
 
 class AutoUpdater {
   final BuildContext context;
-  static String currentVersion = Platform.isWindows ? "0.0.2" : "0.0.3";
+  static String currentVersion = Platform.isWindows ? "0.0.2" : "0.0.2";
   static const String githubURL =
       'https://raw.githubusercontent.com/josereia/symphony-desktop/main/';
 
@@ -26,10 +26,17 @@ class AutoUpdater {
   }
 
   void _quitAndInstall(String filepath) async {
-    await Process.start(filepath, ["-t", "-l", "1000"]).then((value) {
-      SystemNavigator.pop();
-      exit(0);
-    });
+    if (Platform.isWindows) {
+      await Process.start(filepath, ["-t", "-l", "1000"]).then((e) {
+        SystemNavigator.pop();
+        exit(0);
+      });
+    } else {
+      await Process.start("sudo dpkg", ["-i", filepath]).then((e) {
+        SystemNavigator.pop();
+        exit(0);
+      });
+    }
   }
 
   Future _downloadNewVersion(String path) async {

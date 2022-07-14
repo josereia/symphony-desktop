@@ -9,7 +9,7 @@
     "linux_changelog": [
         "Melhorias no código."
     ],
-    "windows_path": "releases/symphony_setup.exe",
-    "linux_path": "releases/symphony_setup.deb",
-    "mac_path": "releases/symphony_setup.sh"
+    "windows_path": "releases/symphony.exe",
+    "linux_path": "releases/symphony.deb",
+    "mac_path": "releases/symphony.sh"
 }
