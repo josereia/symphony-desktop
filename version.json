@@ -1,7 +1,7 @@
 {
     "name": "symphony",
-    "windows_version": "0.0.2",
-    "linux_version": "0.0.3",
+    "windows_version": "0.0.1",
+    "linux_version": "0.0.2",
     "windows_changelog": [
         "Melhorias no desenho da interface.",
         "Página de ver mais ao clicar na lista."

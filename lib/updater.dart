@@ -11,7 +11,7 @@ import 'package:symphony_desktop/ui/widgets/alert_dialog_widget.dart';
 
 class AutoUpdater {
   final BuildContext context;
-  static String currentVersion = Platform.isWindows ? "0.0.2" : "0.0.3";
+  static String currentVersion = Platform.isWindows ? "0.0.1" : "0.0.2";
   static const String githubURL =
       'https://raw.githubusercontent.com/josereia/symphony-desktop/main/';
 
@@ -25,22 +25,16 @@ class AutoUpdater {
     });
   }
 
-  void _quitAndInstall(String filepath) async {
+  void _quitAndInstall(
+      {required String appDir, required String filename}) async {
     if (Platform.isWindows) {
-      await Process.start(filepath, ["-t", "-l", "1000"]).then((e) {
-        SystemNavigator.pop();
-        exit(0);
-      });
+      await Process.start("$appDir/$filename", ["-t", "-l", "1000"]);
+      SystemNavigator.pop();
+      exit(0);
     } else {
-      try {
-        await Process.run('pkexec', ["echo yes | dpkg -i $filepath"]).then((e) {
-          SystemNavigator.pop();
-          exit(0);
-        });
-      } catch (e) {
-        log(e.toString());
-        print(e.toString());
-      }
+      await Process.run("xdg-open", [appDir]);
+      SystemNavigator.pop();
+      exit(0);
     }
   }
 
@@ -56,7 +50,12 @@ class AutoUpdater {
         onReceiveProgress: (int received, int total) {
           log("$received/$total");
         },
-      ).then((value) => _quitAndInstall(file.path));
+      ).then(
+        (value) => _quitAndInstall(
+          appDir: dir.path,
+          filename: filename,
+        ),
+      );
     });
   }
 
