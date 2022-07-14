@@ -11,7 +11,7 @@ import 'package:symphony_desktop/ui/widgets/alert_dialog_widget.dart';
 
 class AutoUpdater {
   final BuildContext context;
-  static String currentVersion = Platform.isWindows ? "0.0.2" : "0.0.2";
+  static String currentVersion = Platform.isWindows ? "0.0.2" : "0.0.3";
   static const String githubURL =
       'https://raw.githubusercontent.com/josereia/symphony-desktop/main/';
 
@@ -32,10 +32,15 @@ class AutoUpdater {
         exit(0);
       });
     } else {
-      await Process.start("sudo dpkg", ["-i", filepath]).then((e) {
-        SystemNavigator.pop();
-        exit(0);
-      });
+      try {
+        await Process.run('pkexec', ["echo yes | dpkg -i $filepath"]).then((e) {
+          SystemNavigator.pop();
+          exit(0);
+        });
+      } catch (e) {
+        log(e.toString());
+        print(e.toString());
+      }
     }
   }
 
