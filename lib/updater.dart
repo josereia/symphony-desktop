@@ -51,7 +51,16 @@ class AutoUpdater {
   Future<void> checkForUpdates() async {
     await _getVersionData().then(
       (data) {
-        if (data['version'] != currentVersion) {
+        final newVersion = Platform.isWindows
+            ? data["windows_version"]
+            : data["linux_version"];
+        final changelog = Platform.isWindows
+            ? data["windows_changelog"]
+            : data["linux_changelog"];
+        final path =
+            Platform.isWindows ? data["windows_path"] : data["linux_path"];
+
+        if (newVersion != currentVersion) {
           showDialog(
             useRootNavigator: true,
             context: context,
@@ -61,18 +70,16 @@ class AutoUpdater {
                 child: ListBody(
                   children: [
                     Text(
-                      "Uma nova versão do symphony está disponível.\n $currentVersion > ${data['version']}",
+                      "Uma nova versão do symphony está disponível.\n $currentVersion > $newVersion",
                     ),
                     const SizedBox(height: 16),
-                    const Text("Changelog:"),
-                    Text(data['changelog'].join("\n")),
+                    const Text("Mudanças:"),
+                    Text(changelog.join("\n")),
                   ],
                 ),
               ),
               confirmButtonText: "update".tr,
-              confirmButtonAction: () => _downloadNewVersion(
-                data['windows_path'],
-              ),
+              confirmButtonAction: () => _downloadNewVersion(path),
             ),
           );
         }

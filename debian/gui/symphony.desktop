@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=symphony
+GenericName=symphony
+Comment=A music player via streaming.
+Terminal=false
+Type=Application
+Categories=Multimedia
+Keywords=Flutter;music;songs;streaming;online;

@@ -1,11 +1,15 @@
 {
     "name": "symphony",
-    "version": "0.0.2",
-    "changelog": [
+    "windows_version": "0.0.2",
+    "linux_version": "0.0.3",
+    "windows_changelog": [
         "Melhorias no desenho da interface.",
         "Página de ver mais ao clicar na lista."
     ],
-    "windows_path": "setups/symphony_setup.exe",
-    "linux_path": "setups/symphony_setup.sh",
-    "mac_path": "setups/symphony_setup.sh"
+    "linux_changelog": [
+        "Melhorias no código."
+    ],
+    "windows_path": "releases/symphony_setup.exe",
+    "linux_path": "releases/symphony_setup.deb",
+    "mac_path": "releases/symphony_setup.sh"
 }
