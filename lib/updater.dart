@@ -11,7 +11,7 @@ import 'package:symphony_desktop/ui/widgets/alert_dialog_widget.dart';
 
 class AutoUpdater {
   final BuildContext context;
-  static String currentVersion = Platform.isWindows ? "0.0.1" : "0.0.2";
+  static String currentVersion = Platform.isWindows ? "0.0.1" : "0.0.1";
   static const String githubURL =
       'https://raw.githubusercontent.com/josereia/symphony-desktop/main/';
 

@@ -1,13 +1,14 @@
 {
     "name": "symphony",
     "windows_version": "0.0.1",
-    "linux_version": "0.0.2",
+    "linux_version": "0.0.1",
     "windows_changelog": [
         "Melhorias no desenho da interface.",
         "Página de ver mais ao clicar na lista."
     ],
     "linux_changelog": [
-        "Melhorias no código."
+        "Melhorias no código.",
+        "Correção de bugs."
     ],
     "windows_path": "releases/symphony.exe",
     "linux_path": "releases/symphony.deb",
