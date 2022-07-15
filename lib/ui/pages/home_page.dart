@@ -14,7 +14,7 @@ class HomePage extends GetView<DatabaseController> {
   Widget build(BuildContext context) {
     AutoUpdater(context: context).checkForUpdates();
     return Scaffold(
-      appBar: const HeaderWidget(),
+      appBar: HeaderWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(

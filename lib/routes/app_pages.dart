@@ -65,6 +65,7 @@ class AppPages {
       page: () => SeeMore(),
       transition: Transition.fade,
       preventDuplicates: true,
+      fullscreenDialog: true,
       transitionDuration: const Duration(milliseconds: 200),
     ),
   ];

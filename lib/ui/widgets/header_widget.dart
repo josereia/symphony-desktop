@@ -4,14 +4,27 @@ import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 
-class HeaderWidget extends GetWidget<NavigationController>
-    with PreferredSizeWidget {
+class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
+  final NavigationController navigationController =
+      Get.find<NavigationController>();
+
   final String? title;
+  final VoidCallback? onBackPressed;
+  final VoidCallback? onNextPressed;
+  final bool? showBackButton;
+  final bool? showNextButton;
 
   @override
   final Size preferredSize = const Size.fromHeight(100);
 
-  const HeaderWidget({super.key, this.title});
+  HeaderWidget({
+    super.key,
+    this.title,
+    this.onBackPressed,
+    this.onNextPressed,
+    this.showBackButton = true,
+    this.showNextButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +40,32 @@ class HeaderWidget extends GetWidget<NavigationController>
             children: [
               Row(
                 children: [
-                  CircleButton(
-                    icon: Ionicons.chevron_back_outline,
-                    onPressed: () => controller.back(),
+                  Visibility(
+                    visible: showBackButton!,
+                    child: Obx(
+                      () => CircleButton(
+                        icon: Ionicons.chevron_back_outline,
+                        isEnabled: onBackPressed != null
+                            ? navigationController.getHaveBackRoute || true
+                            : navigationController.getHaveBackRoute,
+                        onPressed:
+                            onBackPressed ?? () => navigationController.back(),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 16 / 2),
-                  const CircleButton(
-                    icon: Ionicons.chevron_forward_outline,
+                  Visibility(
+                    visible: showNextButton!,
+                    child: Obx(
+                      () => CircleButton(
+                        icon: Ionicons.chevron_forward_outline,
+                        isEnabled: onNextPressed != null
+                            ? navigationController.getHaveNextRoute || true
+                            : navigationController.getHaveNextRoute,
+                        onPressed:
+                            onNextPressed ?? () => navigationController.next(),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -41,7 +73,7 @@ class HeaderWidget extends GetWidget<NavigationController>
               Text(title ?? "",
                   style: Theme.of(context).textTheme.headlineLarge),
             ],
-          )
+          ),
         ],
       ),
     );

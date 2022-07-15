@@ -8,63 +8,85 @@ import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
-import 'package:symphony_desktop/main.dart';
+
+class ListModel {
+  final int index;
+  final IconData icon;
+  final IconData activeIcon;
+  final String title;
+  final String route;
+
+  ListModel({
+    required this.index,
+    required this.icon,
+    required this.activeIcon,
+    required this.title,
+    required this.route,
+  });
+}
+
+class SidebarModel {
+  final String title;
+  final List<ListModel> items;
+
+  SidebarModel({required this.title, required this.items});
+}
 
 class SidebarWidget extends GetView<NavigationController> {
   final PlayerController playerController = Get.find<PlayerController>();
-  final List _items = [
-    {
-      "title": "symphony",
-      "items": [
-        {
-          "index": 0,
-          "icon": Ionicons.home_outline,
-          "activeIcon": Ionicons.home,
-          "title": "home".tr,
-          "route": AppRoutes.initial,
-        },
-        {
-          "index": 1,
-          "icon": Ionicons.search_outline,
-          "activeIcon": Ionicons.search,
-          "title": "search".tr,
-          "route": AppRoutes.search,
-        },
-        {
-          "index": 2,
-          "icon": Ionicons.library_outline,
-          "activeIcon": Ionicons.library,
-          "title": "library".tr,
-          "route": AppRoutes.library,
-        }
-      ]
-    },
-    {
-      "title": "library".tr,
-      "items": [
-        {
-          "index": 3,
-          "icon": Ionicons.disc_outline,
-          "activeIcon": Ionicons.disc,
-          "title": "albums".tr,
-          "route": AppRoutes.albums,
-        },
-        {
-          "index": 4,
-          "icon": Ionicons.people_outline,
-          "activeIcon": Ionicons.people,
-          "title": "artists".tr,
-          "route": AppRoutes.artists,
-        },
-        {
-          "index": 5,
-          "icon": Ionicons.heart_outline,
-          "activeIcon": Ionicons.heart,
-          "title": "favorites".tr,
-          "route": AppRoutes.favorites,
-        }
-      ]
-    }
+  final List<SidebarModel> _items = [
+    SidebarModel(
+      title: "symphony",
+      items: [
+        ListModel(
+          index: 0,
+          icon: Ionicons.home_outline,
+          activeIcon: Ionicons.home,
+          title: "home".tr,
+          route: AppRoutes.initial,
+        ),
+        ListModel(
+          index: 1,
+          icon: Ionicons.search_outline,
+          activeIcon: Ionicons.search,
+          title: "search".tr,
+          route: AppRoutes.search,
+        ),
+        ListModel(
+          index: 2,
+          icon: Ionicons.library_outline,
+          activeIcon: Ionicons.library,
+          title: "library".tr,
+          route: AppRoutes.library,
+        ),
+      ],
+    ),
+    SidebarModel(
+      title: "library".tr,
+      items: [
+        ListModel(
+          index: 3,
+          icon: Ionicons.disc_outline,
+          activeIcon: Ionicons.disc,
+          title: "albums".tr,
+          route: AppRoutes.albums,
+        ),
+        ListModel(
+          index: 4,
+          icon: Ionicons.people_circle_outline,
+          activeIcon: Ionicons.people_circle,
+          title: "artists".tr,
+          route: AppRoutes.artists,
+        ),
+        ListModel(
+          index: 2,
+          icon: Ionicons.heart_outline,
+          activeIcon: Ionicons.heart,
+          title: "favorites".tr,
+          route: AppRoutes.favorites,
+        ),
+      ],
+    ),
   ];
 
   SidebarWidget({super.key});
@@ -119,8 +141,7 @@ class SidebarWidget extends GetView<NavigationController> {
       () => InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
-          Get.toNamed(route);
-          controller.setCurrentRoute(Get.currentRoute);
+          controller.toNamed(route);
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
@@ -172,21 +193,21 @@ class SidebarWidget extends GetView<NavigationController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(_items[categoryIndex]["title"]),
+          Text(_items[categoryIndex].title),
           const SizedBox(height: 6),
           ListView.separated(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: _items[categoryIndex]["items"].length,
+            itemCount: _items[categoryIndex].items.length,
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, categoryItemIndex) => _categoryItem(
               context: context,
-              icon: _items[categoryIndex]["items"][categoryItemIndex]["icon"],
-              activeIcon: _items[categoryIndex]["items"][categoryItemIndex]
-                  ["activeIcon"],
-              text: _items[categoryIndex]["items"][categoryItemIndex]["title"],
-              index: _items[categoryIndex]["items"][categoryItemIndex]["index"],
-              route: _items[categoryIndex]["items"][categoryItemIndex]["route"],
+              icon: _items[categoryIndex].items[categoryItemIndex].icon,
+              activeIcon:
+                  _items[categoryIndex].items[categoryItemIndex].activeIcon,
+              text: _items[categoryIndex].items[categoryItemIndex].title,
+              index: _items[categoryIndex].items[categoryItemIndex].index,
+              route: _items[categoryIndex].items[categoryItemIndex].route,
             ),
           ),
         ],

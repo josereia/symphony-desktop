@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
@@ -23,6 +22,8 @@ class SeeMore extends GetView {
     return Scaffold(
       appBar: HeaderWidget(
         title: _title,
+        onBackPressed: () => Get.back(),
+        showNextButton: false,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 16 * 1.6, bottom: 100),

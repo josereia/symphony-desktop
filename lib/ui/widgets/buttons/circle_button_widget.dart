@@ -7,6 +7,7 @@ class CircleButton extends StatelessWidget {
   final double? height;
   final Color? color;
   final Color? backgroundColor;
+  final bool isEnabled;
 
   const CircleButton({
     super.key,
@@ -16,6 +17,7 @@ class CircleButton extends StatelessWidget {
     this.height,
     this.color,
     this.backgroundColor,
+    this.isEnabled = true,
   });
 
   @override
@@ -31,12 +33,17 @@ class CircleButton extends StatelessWidget {
       disabledElevation: 0,
       highlightElevation: 0,
       shape: const CircleBorder(),
-      fillColor: backgroundColor ?? Theme.of(context).colorScheme.secondary.withAlpha(60),
-      onPressed: onPressed,
+      fillColor: isEnabled
+          ? backgroundColor ??
+              Theme.of(context).colorScheme.secondary.withAlpha(60)
+          : Theme.of(context).colorScheme.secondary.withAlpha(50),
+      onPressed: isEnabled ? onPressed : null,
       child: Center(
         child: Icon(
           icon,
-          color: color ?? Theme.of(context).iconTheme.color,
+          color: isEnabled
+              ? color ?? Theme.of(context).iconTheme.color
+              : Theme.of(context).iconTheme.color?.withAlpha(160),
         ),
       ),
     );
