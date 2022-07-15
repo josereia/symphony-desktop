@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=C:\Users\joaol\Desktop
-OutputBaseFilename=symphony_setup
+OutputBaseFilename=symphony
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
