@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:symphony_desktop/controllers/navigation_controller.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 
-class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
+class HeaderWidget extends GetWidget<NavigationController>
+    with PreferredSizeWidget {
   final String? title;
 
   @override
@@ -27,7 +29,7 @@ class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
                 children: [
                   CircleButton(
                     icon: Ionicons.chevron_back_outline,
-                    onPressed: () => Get.back(),
+                    onPressed: () => controller.back(),
                   ),
                   const SizedBox(width: 16 / 2),
                   const CircleButton(
@@ -36,7 +38,8 @@ class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
                 ],
               ),
               const SizedBox(width: 16),
-              Text(title ?? "", style: Theme.of(context).textTheme.headlineLarge),
+              Text(title ?? "",
+                  style: Theme.of(context).textTheme.headlineLarge),
             ],
           )
         ],

@@ -120,10 +120,7 @@ class SidebarWidget extends GetView<NavigationController> {
         borderRadius: BorderRadius.circular(16),
         onTap: () {
           Get.toNamed(route);
-          navigation?.popUntil((route) {
-            controller.setCurrentRoute(route.settings.name);
-            return true;
-          });
+          controller.setCurrentRoute(Get.currentRoute);
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
