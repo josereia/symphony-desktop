@@ -127,7 +127,7 @@ class PlayerWidget extends StatelessWidget {
                       buffered: controller.getBufferedPosition,
                       thumbRadius: 4,
                       thumbGlowRadius: 6,
-                      onSeek: (position) => controller.seek(position),
+                      onSeek: (position) => controller.setSeek(position),
                       timeLabelLocation: TimeLabelLocation.sides,
                       timeLabelTextStyle: Theme.of(context).textTheme.caption,
                     ),

@@ -36,14 +36,33 @@ class SongsList extends HorizontalList {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  data[index].title,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium,
+                Obx(
+                  () => Text(
+                    data[index].title,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: _playerController.getCurrentSong.title ==
+                                      data[index].title &&
+                                  _playerController.getCurrentSong.artists ==
+                                      data[index].artists
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).textTheme.titleMedium?.color,
+                        ),
+                  ),
                 ),
-                Text(
-                  data[index].artists.join(", "),
-                  overflow: TextOverflow.ellipsis,
+                Obx(
+                  () => Text(
+                    data[index].artists.join(", "),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: _playerController.getCurrentSong.title ==
+                                  data[index].title &&
+                              _playerController.getCurrentSong.artists ==
+                                  data[index].artists
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
+                  ),
                 ),
               ],
             ),
