@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:developer';
+
 import 'package:dart_vlc/dart_vlc.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
@@ -17,6 +17,7 @@ class PlayerController extends GetxController {
   final RxDouble _volume = 1.0.obs;
   final RxInt _currentIndex = 0.obs;
   final RxBool _isCompleted = false.obs;
+  final RxList _queue = [].obs;
   final Rx<SongModel> _currentSong = SongModel(
     title: "",
     artists: [""],
@@ -65,6 +66,7 @@ class PlayerController extends GetxController {
       _currentSong.value = _isShuffle.value
           ? _songs[_currentIndex.value]
           : _originalSongs[_currentIndex.value];
+      _queue.value = state.medias;
     });
     _audioPlayer.playbackStream.listen((PlaybackState state) {
       _isPlaying.value = state.isPlaying;
@@ -153,17 +155,19 @@ class PlayerController extends GetxController {
 
   void setShuffle() {
     _isShuffle.value = !_isShuffle.value;
+    if (_isShuffle.value) {
+      var i = 0;
+      while (i <= _songs.length) {
+        
+        _audioPlayer.remove(i);
+    
+        i++;
+      }
 
-    _isCompleted.listenAndPump(
-      (event) {
-        if (event) {
-          if (_isShuffle.value) {
-            _songs.shuffle();
-            _openPlaylist(songs: _songs, autoStart: true);
-          } 
-        }
-      },
-    );
+      _queue.listen((p0) {
+        log(_queue.length.toString());
+      });
+    }
   }
 
   void muteOrUnmute() {
