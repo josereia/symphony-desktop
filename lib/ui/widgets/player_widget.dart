@@ -129,7 +129,7 @@ class PlayerWidget extends StatelessWidget {
                       thumbGlowRadius: 6,
                       onSeek: (position) => controller.seek(position),
                       timeLabelLocation: TimeLabelLocation.sides,
-                      timeLabelTextStyle: Theme.of(context).textTheme.caption,
+                      timeLabelTextStyle: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],
@@ -187,7 +187,7 @@ class PlayerWidget extends StatelessWidget {
                                     Theme.of(context).colorScheme.primary,
                                 tooltipTextStyle: Theme.of(context)
                                     .textTheme
-                                    .caption
+                                    .bodySmall
                                     ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme

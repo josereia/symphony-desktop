@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
+import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/circle_button_widget.dart';
 
 class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
   final NavigationController navigationController =
       Get.find<NavigationController>();
+  final PlayerController playerController = Get.find<PlayerController>();
 
   final String? title;
   final VoidCallback? onBackPressed;
@@ -30,6 +32,12 @@ class HeaderWidget extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
+      /*decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [playerController.getColor, Colors.white],
+            transform: GradientRotation(100)
+          ),
+        ),*/
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

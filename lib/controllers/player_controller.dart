@@ -1,9 +1,20 @@
 import 'dart:math';
 import 'package:dart_vlc/dart_vlc.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:symphony_desktop/controllers/arduino_controller.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
+import 'package:palette_generator/palette_generator.dart';
+
+Future<Color> _getAlbumColor(String src) async {
+  return await PaletteGenerator.fromImageProvider(
+    NetworkImage(src),
+    size: const Size(200, 200),
+  ).then((value) => value.dominantColor!.color);
+}
 
 class PlayerController extends GetxController {
+  final ArduinoController _arduinoController = ArduinoController();
   final _audioPlayer = Player(id: 69420, commandlineArguments: ['--no-video']);
   final Rx<Duration> _duration = const Duration(milliseconds: 0).obs;
   final Rx<Duration> _position = const Duration(milliseconds: 0).obs;
@@ -13,6 +24,7 @@ class PlayerController extends GetxController {
   final RxBool _isLoop = false.obs;
   final RxBool _isMuted = false.obs;
   final RxDouble _volume = 1.0.obs;
+  final Rx<Color> _color = Colors.white.obs;
   final Rx<SongModel> _currentSong = SongModel(
     title: "",
     artists: [""],
@@ -41,11 +53,18 @@ class PlayerController extends GetxController {
   bool get getIsMuted => _isMuted.value;
   double get getVolume => _volume.value;
   SongModel get getCurrentSong => _currentSong.value;
+  Color get getColor => _color.value;
 
   @override
   void onInit() {
+    super.onInit();
+
     _audioPlayer.currentStream.listen((CurrentState state) {
-      _currentSong.value = _songs[state.index ?? 0];
+      _currentSong.value = _songs[state.index!];
+      _getAlbumColor(_currentSong.value.albumArt).then((value) {
+        _arduinoController.sendColor(value);
+        _color.value = value;
+      });
     });
     _audioPlayer.playbackStream.listen((PlaybackState state) {
       _isPlaying.value = state.isPlaying;
@@ -60,14 +79,12 @@ class PlayerController extends GetxController {
     _audioPlayer.generalStream.listen((GeneralState state) {
       _volume.value = state.volume;
     });
-
-    super.onInit();
   }
 
   @override
   void onClose() {
-    _audioPlayer.dispose();
     super.onClose();
+    _audioPlayer.dispose();
   }
 
   void play(List<SongModel> songs, int index, String playlistTitle) {
@@ -85,6 +102,11 @@ class PlayerController extends GetxController {
     );
     _audioPlayer.play();
     _audioPlayer.jumpToIndex(index);
+
+    _getAlbumColor(_songs[index].albumArt).then((value) {
+      _arduinoController.sendColor(value);
+      _color.value = value;
+    });
   }
 
   void playOrPause() {

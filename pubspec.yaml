@@ -50,6 +50,8 @@ dependencies:
   dio: ^4.0.6
   path_provider: ^2.0.11
   responsive_grid_list: ^1.2.4
+  dart_periphery: ^0.9.1
+  palette_generator: ^0.3.3+2
 
 dev_dependencies:
   flutter_test:
