@@ -1,34 +1,21 @@
-import 'package:firedart/firedart.dart';
-
 class SongModel {
+  final String id;
   final String title;
-  final List artists;
-  final String album;
-  final String albumArt;
-  final String songUrl;
-  final int duration;
+  final String author;
+  final Uri url;
+  final Uri thumbnail;
+  final Duration duration;
+  final String mimeType;
+  final int length;
 
   SongModel({
+    required this.id,
     required this.title,
-    required this.artists,
-    required this.album,
-    required this.albumArt,
-    required this.songUrl,
+    required this.author,
+    required this.url,
+    required this.thumbnail,
     required this.duration,
+    required this.mimeType,
+    required this.length,
   });
-
-  factory SongModel.fromPageDocument(
-    Document document,
-    String albumArt,
-    String songUrl,
-  ) {
-    return SongModel(
-      title: document["title"],
-      artists: document["artists"],
-      album: document["album"],
-      albumArt: albumArt,
-      songUrl: songUrl,
-      duration: document["duration"],
-    );
-  }
 }

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/controllers/navigation_controller.dart';
-import 'package:symphony_desktop/controllers/player_controller.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
+import 'package:symphony_desktop/ui/theme/app_theme_extensions.dart';
 
 class ListModel {
   final int index;
@@ -32,8 +32,78 @@ class SidebarModel {
   SidebarModel({required this.title, required this.items});
 }
 
+class _HeaderWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Platform.isLinux == false
+        ? WindowTitleBarBox(
+            child: MoveWindow(),
+          )
+        : Container();
+  }
+}
+
+class _ItemWidget extends GetView<NavigationController> {
+  final IconData icon;
+  final IconData activeIcon;
+  final String text;
+  final int index;
+  final String route;
+
+  const _ItemWidget({
+    required this.icon,
+    required this.activeIcon,
+    required this.text,
+    required this.index,
+    required this.route,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
+    ThemeMetrics metrics = Theme.of(context).extension<ThemeMetrics>()!;
+
+    return Obx(
+      () => InkWell(
+        onTap: () => controller.toNamed(route),
+        borderRadius: BorderRadius.circular(16),
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Container(
+          padding: metrics.buttonPadding,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                controller.getCurrentRoute == route ? activeIcon : icon,
+                size: 18,
+                color: controller.getCurrentRoute == route
+                    ? colors.text
+                    : colors.text.withOpacity(0.6),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                text,
+                style: TextStyle(
+                  color: controller.getCurrentRoute == route
+                      ? colors.text
+                      : colors.text.withOpacity(0.6),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SidebarWidget extends GetView<NavigationController> {
-  final PlayerController playerController = Get.find<PlayerController>();
   final List<SidebarModel> _items = [
     SidebarModel(
       title: "symphony",
@@ -91,169 +161,65 @@ class SidebarWidget extends GetView<NavigationController> {
 
   SidebarWidget({super.key});
 
-  Widget _sidebarHeader(BuildContext context) {
-    return Column(
-      children: [
-        Platform.isWindows
-            ? WindowTitleBarBox(
-                child: Row(
+  @override
+  Widget build(BuildContext context) {
+    ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
+
+    return SizedBox(
+      width: 240,
+      child: Column(
+        children: [
+          _HeaderWidget(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: _items.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16 * 2),
+                itemBuilder: (context, categoryIndex) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: MoveWindow(),
+                    Text(
+                      _items[categoryIndex].title,
+                      style: TextStyle(
+                        color: colors.text.withOpacity(0.6),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: _items[categoryIndex].items.length,
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 16),
+                      itemBuilder: (context, itemIndex) => _ItemWidget(
+                        icon: _items[categoryIndex].items[itemIndex].icon,
+                        activeIcon:
+                            _items[categoryIndex].items[itemIndex].activeIcon,
+                        text: _items[categoryIndex].items[itemIndex].title,
+                        index: _items[categoryIndex].items[itemIndex].index,
+                        route: _items[categoryIndex].items[itemIndex].route,
+                      ),
                     ),
                   ],
                 ),
-              )
-            : Container(),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                backgroundImage: NetworkImage(
-                  "https://c.tenor.com/ir2nX96xSJUAAAAC/ghosts-my-profile.gif",
-                ),
-                radius: 24,
               ),
-              const SizedBox(width: 16),
-              Text(
-                "João Sereia",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _categoryItem({
-    required BuildContext context,
-    required IconData icon,
-    required IconData activeIcon,
-    required String text,
-    required int index,
-    required String route,
-  }) {
-    return Obx(
-      () => InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          controller.toNamed(route);
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16 / 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: controller.getCurrentRoute == route
-                    ? Colors.black.withAlpha(16)
-                    : Colors.transparent,
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-            color: controller.getCurrentRoute == route
-                ? Theme.of(context).colorScheme.background
-                : Colors.transparent,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                controller.getCurrentRoute == route ? activeIcon : icon,
-                size: 18,
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                text,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _sidebarBody() {
-    return ListView.separated(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: _items.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 16 * 2),
-      itemBuilder: (context, categoryIndex) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(_items[categoryIndex].title),
-          const SizedBox(height: 6),
-          ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: _items[categoryIndex].items.length,
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemBuilder: (context, categoryItemIndex) => _categoryItem(
-              context: context,
-              icon: _items[categoryIndex].items[categoryItemIndex].icon,
-              activeIcon:
-                  _items[categoryIndex].items[categoryItemIndex].activeIcon,
-              text: _items[categoryIndex].items[categoryItemIndex].title,
-              index: _items[categoryIndex].items[categoryItemIndex].index,
-              route: _items[categoryIndex].items[categoryItemIndex].route,
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Color color = Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xff2f2e34)
-        : const Color(0xFFECECEC);
-
-    return Container(
-      width: 240,
-      color: kIsWeb
-          ? Theme.of(context).colorScheme.primary.withAlpha(40)
-          : Platform.isLinux
-              ? color.withAlpha(246)
-              : Colors.transparent,
-      child: Column(
-        children: [
-          _sidebarHeader(context),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 0,
-                bottom: 16,
-                left: 16,
-                right: 16,
-              ),
-              child: _sidebarBody(),
-            ),
-          ),
-          Obx(
-            () => Visibility(
-              visible: playerController.getCurrentSong.albumArt != "",
-              child: Image(
-                width: 240,
-                height: 240,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                image: CachedNetworkImageProvider(
-                  playerController.getCurrentSong.albumArt,
-                ),
-              ),
+          const Visibility(
+            visible: true, //playerController.getCurrentSong.albumArt != "",
+            child: Image(
+              width: 240,
+              height: 240,
+              fit: BoxFit.cover,
+              gaplessPlayback: true,
+              image: CachedNetworkImageProvider(
+                  "https://upload.wikimedia.org/wikipedia/pt/7/71/Sour_-_Olivia_Rodrigo.png" //playerController.getCurrentSong.albumArt,
+                  ),
             ),
           ),
         ],

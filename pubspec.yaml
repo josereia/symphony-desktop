@@ -17,27 +17,36 @@ dependencies:
   get: ^4.6.5
   collection: ^1.16.0
   google_fonts: ^3.0.1
-  firedart: ^0.9.0+1
   audio_video_progress_bar: ^0.10.0
-  dart_vlc: ^0.3.0
-  dart_vlc_ffi: ^0.1.8
   bitsdojo_window: ^0.1.2
   syncfusion_flutter_sliders: ^20.2.36
   syncfusion_flutter_core: ^20.2.36
-  http: ^0.13.4
   cached_network_image: ^3.2.1
   ionicons: ^0.1.2
-  dio: ^4.0.6
-  path_provider: ^2.0.11
   responsive_grid_list: ^1.2.4
   dart_periphery: ^0.9.1
   palette_generator: ^0.3.3+2
+  path_provider: ^2.0.11
+  dio: ^4.0.6
+  just_audio: ^0.9.31
+  youtube_explode_dart: ^1.12.3
+  just_audio_background: ^0.0.1-beta.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.11.0"
+
+flutter_icons:
+  windows:
+    generate: true
+    image_path: "assets/icons/logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icons/logo.png"
 
 flutter:
   uses-material-design: true

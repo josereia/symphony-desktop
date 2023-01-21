@@ -24,6 +24,8 @@ class HorizontalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return Column(
       children: [
         Row(
@@ -32,7 +34,7 @@ class HorizontalList extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: theme.textTheme.headlineMedium,
             ),
             TextButton(
               onPressed: () => seeMoreAction(),

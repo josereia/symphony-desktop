@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:dart_vlc/dart_vlc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/app.dart';
@@ -15,18 +14,9 @@ final GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
 NavigatorState? get navigation => _navigationKey.currentState;
 
 WindowEffect _getWindowEffect() {
-  final bool isWindows11 = Platform.isWindows
-      ? int.parse(
-            Platform.operatingSystemVersion
-                .split("Build ")[1]
-                .replaceAll(")", ""),
-          ) >=
-          22523
-      : false;
-
-  if (isWindows11 || Platform.isMacOS) {
-    return WindowEffect.tabbed;
-  } else if (Platform.isWindows && !isWindows11) {
+  if (Platform.isMacOS) {
+    return WindowEffect.mica;
+  } else if (Platform.isWindows) {
     return WindowEffect.acrylic;
   } else {
     return WindowEffect.transparent;
@@ -34,34 +24,31 @@ WindowEffect _getWindowEffect() {
 }
 
 Future<void> main() async {
-  if (!kIsWeb) {
-    await DartVLC.initialize();
-    WidgetsFlutterBinding.ensureInitialized();
-    await Window.initialize();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Window.initialize();
 
-    await Window.setEffect(
-      effect: _getWindowEffect(),
-      dark: false,
-      /*dark: SchedulerBinding.instance.window.platformBrightness ==
-            Brightness.dark*/
-    );
+  await Window.setEffect(
+    effect: _getWindowEffect(),
+    dark:
+        SchedulerBinding.instance.window.platformBrightness == Brightness.dark,
+  );
 
-    if (Platform.isWindows) {
-      await Window.hideWindowControls();
-    }
-
-    runApp(const MyApp());
-
-    doWhenWindowReady(() {
-      const initialSize = Size(1280, 800);
-      appWindow.minSize = initialSize;
-      appWindow.size = initialSize;
-      appWindow.alignment = Alignment.center;
-      appWindow.show();
-    });
-  } else {
-    runApp(const MyApp());
+  if (Platform.isMacOS) {
+    //await Window.makeTitlebarTransparent();
+    //await Window.enableFullSizeContentView();
+  } else if (Platform.isWindows) {
+    await Window.hideWindowControls();
   }
+
+  runApp(const MyApp());
+
+  doWhenWindowReady(() {
+    const initialSize = Size(1280, 800);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -75,12 +62,13 @@ class MyApp extends StatelessWidget {
       initialBinding: InitialBinding(),
       builder: (context, child) => AppBuilderWidget(child: child),
       navigatorKey: _navigationKey,
-      theme: LightTheme().getTheme(),
-      //darkTheme: DarkTheme().getTheme(),
+      theme: AppTheme(isDark: false).getTheme(),
+      darkTheme: AppTheme(isDark: true).getTheme(),
       locale: Get.deviceLocale,
       fallbackLocale: const Locale("pt", "BR"),
       translations: Languages(),
       debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.noTransition,
     );
   }
 }

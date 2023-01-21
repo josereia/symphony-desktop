@@ -1,32 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:symphony_desktop/controllers/player_controller.dart';
+import 'package:symphony_desktop/data/models/playlist_model.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
+import 'package:symphony_desktop/services/player_service.dart';
 import 'package:symphony_desktop/ui/widgets/lists/horizontal_list_widget.dart';
 
 class SongsList extends HorizontalList {
-  final PlayerController _playerController = Get.find<PlayerController>();
-  final List<SongModel> data;
+  final PlayerService _playerService = Get.find<PlayerService>();
 
-  SongsList({super.key, required super.title, required this.data})
-      : super(itemCount: data.length > 1 ? 10 : 0);
+  final PlaylistModel playlist;
+
+  SongsList({super.key, required super.title, required this.playlist})
+      : super(
+          itemCount: playlist.songs.length,
+        );
 
   @override
   Widget item({required BuildContext context, required int index}) {
     return InkWell(
-      onTap: () => _playerController.play(data, index, title),
+      onTap: () => _playerService.play(
+        playlist: playlist,
+        index: index,
+      ),
       borderRadius: BorderRadius.circular(16),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image(
-              width: 148,
-              height: 148,
-              fit: BoxFit.cover,
-              image: CachedNetworkImageProvider(
-                data[index].albumArt,
+          FittedBox(
+            fit: BoxFit.cover,
+            clipBehavior: Clip.hardEdge,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: CachedNetworkImage(
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+                cacheKey: playlist.songs[index].id,
+                imageUrl: playlist.songs[index].thumbnail.toString(),
               ),
             ),
           ),
@@ -37,12 +47,12 @@ class SongsList extends HorizontalList {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data[index].title,
+                  playlist.songs[index].title,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  data[index].artists.join(", "),
+                  playlist.songs[index].author,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -55,6 +65,6 @@ class SongsList extends HorizontalList {
 
   @override
   void seeMoreAction() {
-    Get.toNamed("/seeMore", arguments: [title, data, item]);
+    Get.toNamed("/seeMore", arguments: [title, playlist, item]);
   }
 }
