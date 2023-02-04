@@ -17,7 +17,7 @@ WindowEffect _getWindowEffect() {
   if (Platform.isMacOS) {
     return WindowEffect.mica;
   } else if (Platform.isWindows) {
-    return WindowEffect.acrylic;
+    return WindowEffect.mica;
   } else {
     return WindowEffect.transparent;
   }

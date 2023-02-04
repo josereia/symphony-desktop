@@ -7,6 +7,7 @@ import 'package:just_audio/just_audio.dart';
 class PlayerService extends GetxService {
   static final _player = AudioPlayer(userAgent: "chrome");
 
+  final Rx<PlaylistModel?> _playlist = Rx(null);
   final Rx<SongModel?> _currentSong = Rx(null);
   final Rx<bool> _isPlaying = Rx(false);
   final Rx<Duration> _position = Rx(const Duration(milliseconds: 0));
@@ -24,12 +25,26 @@ class PlayerService extends GetxService {
   bool get getIsShuffle => _isShuffle.value;
   bool get getIsLoop => _isLoop.value;
 
-  //setters
-  set setVolume(double value) => _volume.value = value;
-
   @override
   void onReady() {
     super.onReady();
+
+    _player.currentIndexStream.listen((index) {
+      _currentSong.value = _playlist.value?.songs[index ?? 0];
+    });
+
+    _player.playerStateStream.listen((event) {
+      _isPlaying.value = event.playing;
+    });
+
+    _player.positionStream.listen((position) {
+      _position.value = position;
+      _position.refresh();
+    });
+
+    _player.bufferedPositionStream.listen(
+      (position) => _bufferedPosition.value = position,
+    );
   }
 
   @override
@@ -38,27 +53,35 @@ class PlayerService extends GetxService {
     _player.dispose();
   }
 
-  Future<void> play(
-      {required PlaylistModel playlist, required int index}) async {
-    final queue = ConcatenatingAudioSource(
+  Future<void> play({
+    required PlaylistModel playlist,
+    required int index,
+  }) async {
+    _playlist.value = playlist;
+    /*final queue = ConcatenatingAudioSource(
       children: playlist.songs
           .map(
             (e) => AudioSource.uri(
-              e.url,
-              tag: MediaItem(
+              Uri.parse(
+                  "http://cld3097web.audiovideoweb.com/va90web25003/companions/Foundations%20of%20Rock/13.01.mp3"),
+              /* tag: MediaItem(
                 id: e.id,
                 title: e.title,
                 artist: e.author,
                 duration: e.duration,
                 artUri: e.thumbnail,
-              ),
+              ),*/
             ),
           )
           .toList(),
-    );
+    );*/
 
-    await _player.setAudioSource(queue, initialIndex: index);
-    await _player.play();
+    await _player
+        .setAudioSource(
+          AudioSource.uri(playlist.songs[index].url),
+          initialIndex: index,
+        )
+        .then((value) => _player.play());
   }
 
   Future<void> shuffle() async => await _player.shuffle();
@@ -68,6 +91,11 @@ class PlayerService extends GetxService {
   Future<void> previous() async => await _player.seekToPrevious();
 
   Future<void> seek(Duration position) async => await _player.seek(position);
+
+  Future<void> setVolume(double value) async {
+    _volume.value = value;
+    _player.setVolume(value);
+  }
 
   Future<void> loop() async {
     if (_isLoop.value == true) {
@@ -79,13 +107,16 @@ class PlayerService extends GetxService {
 
   Future<void> muteOrUnmute() async {
     if (_volume.value == 0) {
-      await _player.setVolume(1);
+      _volume.value = 1;
+      _player.setVolume(1);
     } else {
-      await _player.setVolume(0);
+      _volume.value = 0;
+      _player.setVolume(0);
     }
   }
 
   Future<void> playOrPause() async {
+    print("DSddd");
     if (_isPlaying.value == true) {
       await _player.pause();
     } else {

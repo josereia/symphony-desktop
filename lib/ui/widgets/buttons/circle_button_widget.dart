@@ -20,7 +20,7 @@ class CircleButton extends StatelessWidget {
     this.height,
     this.color,
     this.backgroundColor,
-    this.isEnabled,
+    this.isEnabled = true,
   });
 
   @override

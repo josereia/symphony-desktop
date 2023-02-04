@@ -40,34 +40,36 @@ class PlayerWidget extends GetView<PlayerService> {
             children: [
               SizedBox(
                 width: 300,
-                child: Visibility(
-                  visible: controller.getCurrentSong != null,
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              controller.getCurrentSong?.title ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: theme.textTheme.titleLarge,
-                            ),
-                            Text(
-                              controller.getCurrentSong?.author ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ],
+                child: Obx(
+                  () => Visibility(
+                    visible: controller.getCurrentSong != null,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                controller.getCurrentSong?.title ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: theme.textTheme.titleLarge,
+                              ),
+                              Text(
+                                controller.getCurrentSong?.author ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Ionicons.heart_outline),
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Ionicons.heart_outline),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -215,7 +217,7 @@ class PlayerWidget extends GetView<PlayerService> {
                                             "%",
                                     value: controller.getVolume,
                                     onChanged: (dynamic value) =>
-                                        controller.setVolume = value,
+                                        controller.setVolume(value),
                                   ),
                                 ),
                               ),
