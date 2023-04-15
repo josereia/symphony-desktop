@@ -3,6 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  bitsdojo_window_linux
+  dart_vlc
+  flutter_acrylic
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
