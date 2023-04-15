@@ -5,8 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:symphony_desktop/app_builder.dart';
+import 'package:get/get.dart';
+import 'package:symphony_desktop/routes/app_pages.dart';
+import 'package:symphony_desktop/routes/app_routes.dart';
+import 'package:symphony_desktop/ui/themes/app_theme.dart';
 
 bool _isTransparent = false;
+
 String _getWindowsVersion() {
   if (Platform.operatingSystemVersion.contains("10.")) {
     final String osVersion = Platform.operatingSystemVersion;
@@ -89,12 +94,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return GetMaterialApp(
+      title: 'symphony',
+      theme: AppTheme.getTheme(isDark: false),
+      darkTheme: AppTheme.getTheme(isDark: false),
+      getPages: AppPages.pages,
+      initialRoute: AppRoutes.initial,
+      locale: const Locale("pt", "BR"),
+      debugShowCheckedModeBanner: false,
       builder: (BuildContext context, Widget? child) => AppBuilder(
         isTransparent: _isTransparent,
         child: child,

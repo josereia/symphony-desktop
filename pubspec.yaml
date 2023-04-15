@@ -44,6 +44,7 @@ dependencies:
   get_storage: ^2.1.1
   flutter_acrylic: ^1.1.2
   bitsdojo_window: ^0.1.5
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:

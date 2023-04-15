@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:symphony_desktop/widgets/window_titlebar_widget.dart';
+import 'package:symphony_desktop/ui/widgets/window_titlebar_widget.dart';
 
 class _WindowContent extends StatelessWidget {
   final Widget child;
