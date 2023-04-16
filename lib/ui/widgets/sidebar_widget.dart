@@ -52,7 +52,7 @@ class _SidebarItemWidgetState extends State<SidebarItemWidget> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            offset: const Offset(0, 16),
+            offset: Offset(0, metrics.smallGap),
             blurRadius: 16,
             color: shadowColor,
           ),

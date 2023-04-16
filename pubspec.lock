@@ -29,10 +29,10 @@ packages:
     dependency: "direct main"
     description:
       name: audio_video_progress_bar
-      sha256: "67f3a5ea70d48b48caaf29f5a0606284a6aa3a393736daf9e82bec985d2f9b70"
+      sha256: ccabb4d056927b36b64ab61c4250bb7371fd83fa935595024e929adbb0f96c55
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "0.4.0"
   bitsdojo_window:
     dependency: "direct main"
     description:

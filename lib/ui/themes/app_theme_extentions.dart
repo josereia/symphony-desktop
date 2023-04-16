@@ -74,6 +74,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
   final double smallGap;
   final double borderWidth;
   final double iconSize;
+  final double blurAmmount;
   final Radius borderRadius;
   final Size buttonSize;
   final Radius buttonRadius;
@@ -89,6 +90,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
     required this.smallGap,
     required this.borderWidth,
     required this.iconSize,
+    required this.blurAmmount,
     required this.borderRadius,
     required this.buttonSize,
     required this.buttonRadius,
@@ -106,6 +108,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
     double? smallGap,
     double? borderWidth,
     double? iconSize,
+    double? blurAmmount,
     Radius? borderRadius,
     Size? buttonSize,
     Radius? buttonRadius,
@@ -121,6 +124,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
       smallGap: smallGap ?? this.smallGap,
       borderWidth: borderWidth ?? this.borderWidth,
       iconSize: iconSize ?? this.iconSize,
+      blurAmmount: blurAmmount ?? this.blurAmmount,
       borderRadius: borderRadius ?? this.borderRadius,
       buttonSize: buttonSize ?? this.buttonSize,
       buttonRadius: buttonRadius ?? this.buttonRadius,

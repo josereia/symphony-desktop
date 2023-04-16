@@ -5,6 +5,7 @@ import 'package:symphony_desktop/routes/app_routes.dart';
 import 'package:symphony_desktop/services/navigation_services.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 import 'package:symphony_desktop/ui/widgets/gap_widget.dart';
+import 'package:symphony_desktop/ui/widgets/player_widget.dart';
 import 'package:symphony_desktop/ui/widgets/sidebar_widget.dart';
 import 'package:symphony_desktop/ui/widgets/text_widget.dart';
 import 'package:symphony_desktop/ui/widgets/window_titlebar_widget.dart';
@@ -95,7 +96,17 @@ class _WindowContent extends StatelessWidget {
           footerWidget: _SidebarFooterWidget(),
         ),
         Expanded(
-          child: child,
+          child: Stack(
+            children: [
+              Positioned.fill(child: child),
+              const Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: PlayerWidget(),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -115,6 +126,7 @@ class AppBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
+    final ThemeMetrics metrics = Theme.of(context).extension<ThemeMetrics>()!;
 
     final Color backgroundColor =
         isTransparent ? Colors.transparent : Colors.white;
@@ -125,8 +137,9 @@ class AppBuilder extends StatelessWidget {
         children: [
           Positioned.fill(
             child: _WindowContent(
-              child: ColoredBox(
+              child: Container(
                 color: colors.background,
+                padding: EdgeInsets.all(metrics.padding),
                 child: child,
               ),
             ),

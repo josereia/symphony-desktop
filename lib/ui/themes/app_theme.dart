@@ -15,13 +15,14 @@ abstract class AppTheme {
       smallGap: 8,
       borderWidth: 0.6,
       iconSize: 18,
+      blurAmmount: 100,
       borderRadius: Radius.circular(16),
       buttonSize: Size(300, 34),
       buttonRadius: Radius.circular(16),
-      fieldSize: Size(300, 34),
+      fieldSize: Size(340, 34),
       fieldRadius: Radius.circular(16),
       sidebarSize: Size(200, double.infinity),
-      playerSize: Size(double.infinity, 60),
+      playerSize: Size(double.infinity, 80),
     );
 
     if (isDark) {
