@@ -8,6 +8,7 @@ import 'package:symphony_desktop/app_builder.dart';
 import 'package:get/get.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/routes/app_routes.dart';
+import 'package:symphony_desktop/services/navigation_services.dart';
 import 'package:symphony_desktop/ui/themes/app_theme.dart';
 
 bool _isTransparent = false;
@@ -76,6 +77,9 @@ Future<void> main() async {
 
   if (kIsWeb == false && Platform.isWindows) await _loadWindowEffect();
 
+  //services
+  Get.lazyPut(() => NavigationService());
+
   runApp(const MyApp());
 
   doWhenWindowReady(() {
@@ -101,6 +105,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
       locale: const Locale("pt", "BR"),
+      defaultTransition: Transition.fade,
       debugShowCheckedModeBanner: false,
       builder: (BuildContext context, Widget? child) => AppBuilder(
         isTransparent: _isTransparent,

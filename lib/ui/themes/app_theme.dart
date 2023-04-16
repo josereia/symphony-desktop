@@ -13,6 +13,9 @@ abstract class AppTheme {
       smallPadding: 8,
       gap: 16,
       smallGap: 8,
+      borderWidth: 0.6,
+      iconSize: 18,
+      borderRadius: Radius.circular(16),
       buttonSize: Size(300, 34),
       buttonRadius: Radius.circular(16),
       fieldSize: Size(300, 34),
@@ -45,6 +48,7 @@ abstract class AppTheme {
       dividerColor: colors.border,
       shadowColor: colors.shadow,
       scaffoldBackgroundColor: colors.background,
+      iconTheme: IconThemeData(size: metrics.iconSize),
       textTheme: GoogleFonts.poppinsTextTheme(baseTheme.textTheme).copyWith(
         bodySmall: TextStyle(
           fontSize: 12,
