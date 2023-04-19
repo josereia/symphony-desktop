@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:symphony_desktop/services/player_service.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/button_widget.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/icon_button_widget.dart';
@@ -11,7 +12,9 @@ import 'package:symphony_desktop/ui/widgets/progress_bar_widget.dart';
 import 'package:symphony_desktop/ui/widgets/text_widget.dart';
 
 class PlayerWidget extends StatelessWidget {
-  const PlayerWidget({super.key});
+  final PlayerService playerService = Get.find<PlayerService>();
+
+  PlayerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +43,26 @@ class PlayerWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    TextWidget("Nome da música", isBold: true),
-                    TextWidget("Nome do artista"),
-                  ],
+              Expanded(
+                child: Obx(
+                  () => Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWidget(
+                        playerService.getCurrentSong?.title ?? "",
+                        isBold: true,
+                      ),
+                      TextWidget(
+                        playerService.getCurrentSong?.artist ?? "",
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              const GapWidget(
+                direction: GapWidgetDirections.horizontal,
+                size: GapWidgetSizes.normal,
               ),
               SizedBox(
                 width: 400,
@@ -69,9 +82,29 @@ class PlayerWidget extends StatelessWidget {
                           direction: GapWidgetDirections.horizontal,
                           size: GapWidgetSizes.normal,
                         ),
-                        ButtonWidget(
-                          icon: Ionicons.play,
-                          onPressed: () => {},
+                        IconButtonWidget(
+                          icon: Ionicons.play_skip_back,
+                          onPressed: () => playerService.previous(),
+                        ),
+                        const GapWidget(
+                          direction: GapWidgetDirections.horizontal,
+                          size: GapWidgetSizes.small,
+                        ),
+                        Obx(
+                          () => ButtonWidget(
+                            icon: playerService.getIsPlaying == true
+                                ? Ionicons.pause
+                                : Ionicons.play,
+                            onPressed: () => playerService.playOrPause(),
+                          ),
+                        ),
+                        const GapWidget(
+                          direction: GapWidgetDirections.horizontal,
+                          size: GapWidgetSizes.small,
+                        ),
+                        IconButtonWidget(
+                          icon: Ionicons.play_skip_forward,
+                          onPressed: () => playerService.next(),
                         ),
                         const GapWidget(
                           direction: GapWidgetDirections.horizontal,
@@ -87,11 +120,23 @@ class PlayerWidget extends StatelessWidget {
                       direction: GapWidgetDirections.vertical,
                       size: GapWidgetSizes.small,
                     ),
-                    const ProgressBarWidget(),
+                    Obx(
+                      () => ProgressBarWidget(
+                        total: playerService.getDuration,
+                        progress: playerService.getPosition,
+                        onSeek: (Duration duration) => playerService.seek(
+                          duration,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Container(width: 200),
+              const GapWidget(
+                direction: GapWidgetDirections.horizontal,
+                size: GapWidgetSizes.normal,
+              ),
+              Expanded(child: Container()),
             ],
           ),
         ),

@@ -13,16 +13,16 @@ abstract class AppTheme {
       smallPadding: 8,
       gap: 16,
       smallGap: 8,
-      borderWidth: 0.6,
+      borderWidth: 1,
       iconSize: 18,
-      blurAmmount: 100,
+      blurAmmount: 50,
       borderRadius: Radius.circular(16),
       buttonSize: Size(300, 34),
       buttonRadius: Radius.circular(16),
       fieldSize: Size(340, 34),
       fieldRadius: Radius.circular(16),
-      sidebarSize: Size(200, double.infinity),
-      playerSize: Size(double.infinity, 80),
+      sidebarSize: Size(180, double.infinity),
+      playerSize: Size(double.infinity, 68),
     );
 
     if (isDark) {

@@ -64,6 +64,8 @@ class TextWidget extends StatelessWidget {
       replacement: Text(
         text,
         style: style ?? defaultStyle,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       ),
       child: TextScroll(
         text,

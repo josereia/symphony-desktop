@@ -1,14 +1,18 @@
 import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:dart_vlc/dart_vlc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:symphony_desktop/app_builder.dart';
 import 'package:get/get.dart';
+import 'package:symphony_desktop/data/providers/youtube_provider.dart';
+import 'package:symphony_desktop/data/repositories/player_service_repository.dart';
 import 'package:symphony_desktop/routes/app_pages.dart';
 import 'package:symphony_desktop/routes/app_routes.dart';
-import 'package:symphony_desktop/services/navigation_services.dart';
+import 'package:symphony_desktop/services/navigation_service.dart';
+import 'package:symphony_desktop/services/player_service.dart';
 import 'package:symphony_desktop/ui/themes/app_theme.dart';
 
 bool _isTransparent = false;
@@ -38,35 +42,25 @@ Future<void> _loadWindowEffect() async {
     switch (version) {
       case "windows7":
         _isTransparent = false;
-        await Window.setEffect(
-          effect: WindowEffect.solid,
-          color: Colors.white,
-          dark: false,
-        );
+        await Window.setEffect(effect: WindowEffect.solid);
         break;
       case "windows10":
         _isTransparent = true;
         await Window.setEffect(
           effect: WindowEffect.aero,
-          color: Colors.white.withOpacity(0.6),
-          dark: false,
+          color: Colors.transparent,
         );
         break;
       case "windows11":
         _isTransparent = true;
         await Window.setEffect(
           effect: WindowEffect.acrylic,
-          color: Colors.white,
-          dark: false,
+          color: Colors.transparent,
         );
         break;
       default:
         _isTransparent = false;
-        await Window.setEffect(
-          effect: WindowEffect.solid,
-          color: Colors.white,
-          dark: false,
-        );
+        await Window.setEffect(effect: WindowEffect.solid);
         break;
     }
   }
@@ -75,10 +69,20 @@ Future<void> _loadWindowEffect() async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kIsWeb == false && Platform.isWindows) await _loadWindowEffect();
+  if (kIsWeb == false && Platform.isWindows) {
+    await _loadWindowEffect();
+    DartVLC.initialize();
+  }
 
   //services
   Get.lazyPut(() => NavigationService());
+  Get.lazyPut(
+    () => PlayerService(
+      repository: PlayerServiceRepository(
+        songProvider: YoutubeProvider(),
+      ),
+    ),
+  );
 
   runApp(const MyApp());
 
@@ -101,7 +105,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'symphony',
       theme: AppTheme.getTheme(isDark: false),
-      darkTheme: AppTheme.getTheme(isDark: false),
+      darkTheme: AppTheme.getTheme(isDark: true),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
       locale: const Locale("pt", "BR"),
@@ -110,53 +114,6 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) => AppBuilder(
         isTransparent: _isTransparent,
         child: child,
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  const MyHomePage({super.key, required this.title});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

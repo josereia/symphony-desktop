@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/routes/app_routes.dart';
-import 'package:symphony_desktop/services/navigation_services.dart';
+import 'package:symphony_desktop/services/navigation_service.dart';
+import 'package:symphony_desktop/services/player_service.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 import 'package:symphony_desktop/ui/widgets/gap_widget.dart';
 import 'package:symphony_desktop/ui/widgets/player_widget.dart';
@@ -51,7 +52,7 @@ class _SidebarBodyWidget extends StatelessWidget {
       itemCount: items.length,
       separatorBuilder: (BuildContext context, int index) => const GapWidget(
         direction: GapWidgetDirections.vertical,
-        size: GapWidgetSizes.normal,
+        size: GapWidgetSizes.small,
       ),
       itemBuilder: (BuildContext context, int index) => Obx(
         () => SidebarItemWidget(
@@ -67,11 +68,19 @@ class _SidebarBodyWidget extends StatelessWidget {
 }
 
 class _SidebarFooterWidget extends StatelessWidget {
+  final PlayerService playerService = Get.find<PlayerService>();
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      "https://community.mp3tag.de/uploads/default/original/2X/a/acf3edeb055e7b77114f9e393d1edeeda37e50c9.png",
-      fit: BoxFit.cover,
+    return Obx(
+      () => Visibility(
+        visible: playerService.getCurrentSong?.thumbnail != null,
+        child: Image.network(
+          playerService.getCurrentSong?.thumbnail.toString() ??
+              "https://community.mp3tag.de/uploads/default/original/2X/a/acf3edeb055e7b77114f9e393d1edeeda37e50c9.png",
+          height: 200,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
@@ -88,7 +97,6 @@ class _WindowContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
       children: [
         SidebarWidget(
           headerWidget: _SidebarHeaderWidget(),
@@ -99,7 +107,7 @@ class _WindowContent extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(child: child),
-              const Positioned(
+              Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,

@@ -37,9 +37,9 @@ class _SidebarItemWidgetState extends State<SidebarItemWidget> {
     late IconData icon;
 
     if (widget.isActive || isHovered) {
-      backgroundColor = colors.textContrast;
+      backgroundColor = colors.onSidebar.withOpacity(0.2);
       foregroundColor = colors.onSidebar;
-      shadowColor = colors.shadow;
+      shadowColor = Colors.transparent;
       icon = widget.activeIcon;
     } else {
       backgroundColor = Colors.transparent;
@@ -73,7 +73,7 @@ class _SidebarItemWidgetState extends State<SidebarItemWidget> {
             ),
             child: Row(
               children: [
-                Icon(icon),
+                Icon(icon, color: foregroundColor),
                 const GapWidget(
                   direction: GapWidgetDirections.horizontal,
                   size: GapWidgetSizes.small,
@@ -127,12 +127,18 @@ class SidebarWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            padding: EdgeInsets.all(metrics.padding),
+            padding: EdgeInsets.symmetric(
+              horizontal: metrics.smallPadding,
+              vertical: metrics.padding,
+            ),
             child: headerWidget,
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(metrics.padding),
+              padding: EdgeInsets.symmetric(
+                horizontal: metrics.smallPadding,
+                vertical: metrics.padding,
+              ),
               child: bodyWidget,
             ),
           ),

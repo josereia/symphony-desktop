@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_windows
   dart_vlc
   flutter_acrylic
+  just_audio_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

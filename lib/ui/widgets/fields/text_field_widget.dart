@@ -7,7 +7,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final IconData? prefixIcon;
-  final void Function(String)? onSubmitted;
+  final void Function(String value)? onSubmitted;
 
   const TextFieldWidget({
     super.key,
@@ -43,7 +43,9 @@ class TextFieldWidget extends StatelessWidget {
             style: theme.textTheme.bodyMedium,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: theme.textTheme.bodyMedium,
+              hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.text.withOpacity(0.6),
+              ),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: metrics.padding,
               ),
