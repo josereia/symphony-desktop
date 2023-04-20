@@ -17,13 +17,16 @@ class IconButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
 
-    return IconButton(
-      onPressed: onPressed,
-      padding: EdgeInsets.zero,
-      visualDensity: VisualDensity.compact,
-      icon: Icon(
-        icon,
-        color: isActive == true ? colors.primary : colors.text,
+    return Material(
+      type: MaterialType.transparency,
+      child: IconButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        icon: Icon(
+          icon,
+          color: isActive == true ? colors.primary : colors.text,
+        ),
       ),
     );
   }

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 import 'package:symphony_desktop/data/models/song_model.dart';
 import 'package:symphony_desktop/services/player_service.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
+import 'package:symphony_desktop/ui/widgets/gap_widget.dart';
 import 'package:symphony_desktop/ui/widgets/text_widget.dart';
 
 class _SongWidget extends StatefulWidget {
   final SongModel song;
+  final bool isActive;
   final void Function()? onPressed;
 
   const _SongWidget({
     required this.song,
+    required this.isActive,
     required this.onPressed,
   });
 
@@ -24,7 +26,19 @@ class _SongWidgetState extends State<_SongWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
     final ThemeMetrics metrics = Theme.of(context).extension<ThemeMetrics>()!;
+
+    late Color backgroundColor;
+    late Color foregroundColor;
+
+    if (widget.isActive) {
+      backgroundColor = colors.secondary;
+      foregroundColor = colors.primary;
+    } else {
+      backgroundColor = colors.background;
+      foregroundColor = colors.text;
+    }
 
     return Material(
       type: MaterialType.transparency,
@@ -32,9 +46,11 @@ class _SongWidgetState extends State<_SongWidget> {
         onTap: widget.onPressed,
         onHover: (value) => setState(() => isHovered = value),
         borderRadius: BorderRadius.all(metrics.borderRadius),
+        hoverColor: colors.secondary,
         child: Ink(
           padding: EdgeInsets.all(metrics.smallPadding),
           decoration: BoxDecoration(
+            color: backgroundColor,
             borderRadius: BorderRadius.all(metrics.borderRadius),
           ),
           child: Column(
@@ -50,14 +66,20 @@ class _SongWidgetState extends State<_SongWidget> {
                   fit: BoxFit.cover,
                 ),
               ),
+              const GapWidget(
+                direction: GapWidgetDirections.vertical,
+                size: GapWidgetSizes.small,
+              ),
               TextWidget(
                 widget.song.title,
                 isBold: true,
                 isAutoScroll: isHovered,
+                color: foregroundColor,
               ),
               TextWidget(
                 widget.song.artist,
                 isAutoScroll: isHovered,
+                color: foregroundColor,
               ),
             ],
           ),
@@ -85,17 +107,20 @@ class SongsGridWidget extends StatelessWidget {
       ),
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200,
-        mainAxisExtent: 160,
+        mainAxisExtent: 162,
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
       ),
       children: [
         for (SongModel song in songs)
-          _SongWidget(
-            song: song,
-            onPressed: () => playerService.play(
-              songs: songs,
-              index: song.index,
+          Obx(
+            () => _SongWidget(
+              song: song,
+              isActive: playerService.getCurrentSong?.id == song.id,
+              onPressed: () => playerService.play(
+                songs: songs,
+                index: song.index,
+              ),
             ),
           ),
       ],

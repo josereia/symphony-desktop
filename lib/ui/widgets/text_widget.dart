@@ -70,6 +70,10 @@ class TextWidget extends StatelessWidget {
       child: TextScroll(
         text,
         style: style ?? defaultStyle,
+        pauseBetween: const Duration(seconds: 1),
+        velocity: const Velocity(
+          pixelsPerSecond: Offset(34, 0),
+        ),
       ),
     );
   }

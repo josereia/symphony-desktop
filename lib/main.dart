@@ -77,11 +77,12 @@ Future<void> main() async {
   //services
   Get.lazyPut(() => NavigationService());
   Get.lazyPut(
+    // ignore: unnecessary_cast
     () => PlayerService(
       repository: PlayerServiceRepository(
         songProvider: YoutubeProvider(),
       ),
-    ),
+    ) as PlayerService,
   );
 
   runApp(const MyApp());
@@ -105,15 +106,21 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'symphony',
       theme: AppTheme.getTheme(isDark: false),
-      darkTheme: AppTheme.getTheme(isDark: true),
+      darkTheme: AppTheme.getTheme(isDark: false),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
       locale: const Locale("pt", "BR"),
       defaultTransition: Transition.fade,
       debugShowCheckedModeBanner: false,
-      builder: (BuildContext context, Widget? child) => AppBuilder(
-        isTransparent: _isTransparent,
-        child: child,
+      builder: (BuildContext context, Widget? child) => Overlay(
+        initialEntries: [
+          OverlayEntry(
+            builder: (BuildContext context) => AppBuilder(
+              isTransparent: _isTransparent,
+              child: child,
+            ),
+          ),
+        ],
       ),
     );
   }

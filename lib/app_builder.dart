@@ -74,11 +74,13 @@ class _SidebarFooterWidget extends StatelessWidget {
     return Obx(
       () => Visibility(
         visible: playerService.getCurrentSong?.thumbnail != null,
-        child: Image.network(
-          playerService.getCurrentSong?.thumbnail.toString() ??
-              "https://community.mp3tag.de/uploads/default/original/2X/a/acf3edeb055e7b77114f9e393d1edeeda37e50c9.png",
-          height: 200,
-          fit: BoxFit.cover,
+        child: AspectRatio(
+          aspectRatio: 1 / 1,
+          child: Image.network(
+            playerService.getCurrentSong?.thumbnail.toString() ??
+                "https://community.mp3tag.de/uploads/default/original/2X/a/acf3edeb055e7b77114f9e393d1edeeda37e50c9.png",
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

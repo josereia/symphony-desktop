@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 import 'package:symphony_desktop/controllers/search_page_controller.dart';
-import 'package:symphony_desktop/data/models/song_model.dart';
 import 'package:symphony_desktop/ui/widgets/fields/text_field_widget.dart';
 import 'package:symphony_desktop/ui/widgets/loading_widget.dart';
 import 'package:symphony_desktop/ui/widgets/songs_grid_widget.dart';

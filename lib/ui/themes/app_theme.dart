@@ -15,7 +15,7 @@ abstract class AppTheme {
       smallGap: 8,
       borderWidth: 1,
       iconSize: 18,
-      blurAmmount: 50,
+      blurAmmount: 16,
       borderRadius: Radius.circular(16),
       buttonSize: Size(300, 34),
       buttonRadius: Radius.circular(16),

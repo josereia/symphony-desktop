@@ -9,6 +9,7 @@ import 'package:symphony_desktop/ui/widgets/buttons/button_widget.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/icon_button_widget.dart';
 import 'package:symphony_desktop/ui/widgets/gap_widget.dart';
 import 'package:symphony_desktop/ui/widgets/progress_bar_widget.dart';
+import 'package:symphony_desktop/ui/widgets/slider_widget.dart';
 import 'package:symphony_desktop/ui/widgets/text_widget.dart';
 
 class PlayerWidget extends StatelessWidget {
@@ -32,7 +33,7 @@ class PlayerWidget extends StatelessWidget {
           height: metrics.playerSize.height,
           padding: EdgeInsets.symmetric(horizontal: metrics.padding),
           decoration: BoxDecoration(
-            color: colors.sidebar,
+            color: colors.secondary,
             border: Border(
               top: BorderSide(
                 width: metrics.borderWidth,
@@ -74,16 +75,19 @@ class PlayerWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        IconButtonWidget(
-                          icon: Ionicons.shuffle,
-                          onPressed: () => {},
+                        Obx(
+                          () => IconButtonWidget(
+                            icon: Ionicons.shuffle_outline,
+                            isActive: playerService.getIsShuffle,
+                            onPressed: () => playerService.shuffle(),
+                          ),
                         ),
                         const GapWidget(
                           direction: GapWidgetDirections.horizontal,
                           size: GapWidgetSizes.normal,
                         ),
                         IconButtonWidget(
-                          icon: Ionicons.play_skip_back,
+                          icon: Ionicons.play_skip_back_outline,
                           onPressed: () => playerService.previous(),
                         ),
                         const GapWidget(
@@ -93,8 +97,8 @@ class PlayerWidget extends StatelessWidget {
                         Obx(
                           () => ButtonWidget(
                             icon: playerService.getIsPlaying == true
-                                ? Ionicons.pause
-                                : Ionicons.play,
+                                ? Ionicons.pause_outline
+                                : Ionicons.play_outline,
                             onPressed: () => playerService.playOrPause(),
                           ),
                         ),
@@ -103,16 +107,19 @@ class PlayerWidget extends StatelessWidget {
                           size: GapWidgetSizes.small,
                         ),
                         IconButtonWidget(
-                          icon: Ionicons.play_skip_forward,
+                          icon: Ionicons.play_skip_forward_outline,
                           onPressed: () => playerService.next(),
                         ),
                         const GapWidget(
                           direction: GapWidgetDirections.horizontal,
                           size: GapWidgetSizes.normal,
                         ),
-                        IconButtonWidget(
-                          icon: Ionicons.repeat,
-                          onPressed: () => {},
+                        Obx(
+                          () => IconButtonWidget(
+                            icon: Ionicons.repeat_outline,
+                            isActive: playerService.getIsRepeat,
+                            onPressed: () => playerService.repeat(),
+                          ),
                         ),
                       ],
                     ),
@@ -136,7 +143,31 @@ class PlayerWidget extends StatelessWidget {
                 direction: GapWidgetDirections.horizontal,
                 size: GapWidgetSizes.normal,
               ),
-              Expanded(child: Container()),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const IconButtonWidget(icon: Ionicons.list_outline),
+                    const GapWidget(
+                      direction: GapWidgetDirections.horizontal,
+                      size: GapWidgetSizes.small,
+                    ),
+                    Obx(
+                      () => SliderWidget(
+                        min: 0,
+                        max: 1,
+                        value: playerService.getVolume,
+                        icon: Ionicons.volume_high_outline,
+                        onIconPressed: () => playerService.setVolume(0),
+                        onChanged: (double value) => playerService.setVolume(
+                          value,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

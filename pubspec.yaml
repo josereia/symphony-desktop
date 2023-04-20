@@ -18,7 +18,6 @@ dependencies:
   dart_vlc: ^0.4.0
   dart_vlc_ffi: ^0.2.0+1
   get: ^4.6.5
-  flutter_launcher_icons: ^0.13.0
   ionicons: ^0.2.2
   get_storage: ^2.1.1
   flutter_acrylic: ^1.1.2
@@ -26,15 +25,32 @@ dependencies:
   google_fonts: ^4.0.3
   text_scroll: ^0.2.0
   youtube_explode_dart: ^1.12.4
-  just_audio: ^0.9.32
-  just_audio_windows: ^0.2.0
-  just_audio_background: ^0.0.1-beta.9
+  collection: ^1.17.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.0
 
 flutter:
   uses-material-design: true
+
+assets:
+  - assets/icon.png
+
+flutter_icons:
+  image_path: "assets/icon.png"
+  web:
+    generate: true
+    image_path: "assets/icon.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/icon.png"
+    icon_size: 256 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icon.png"
