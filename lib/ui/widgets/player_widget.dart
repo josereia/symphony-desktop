@@ -33,7 +33,7 @@ class PlayerWidget extends StatelessWidget {
           height: metrics.playerSize.height,
           padding: EdgeInsets.symmetric(horizontal: metrics.padding),
           decoration: BoxDecoration(
-            color: colors.secondary,
+            color: colors.sidebar,
             border: Border(
               top: BorderSide(
                 width: metrics.borderWidth,
@@ -131,6 +131,7 @@ class PlayerWidget extends StatelessWidget {
                       () => ProgressBarWidget(
                         total: playerService.getDuration,
                         progress: playerService.getPosition,
+                        buffered: playerService.getBuffer,
                         onSeek: (Duration duration) => playerService.seek(
                           duration,
                         ),

@@ -71,6 +71,9 @@ Future<void> main() async {
 
   if (kIsWeb == false && Platform.isWindows) {
     await _loadWindowEffect();
+  }
+
+  if (kIsWeb == false && Platform.isWindows || Platform.isLinux) {
     DartVLC.initialize();
   }
 
@@ -106,7 +109,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'symphony',
       theme: AppTheme.getTheme(isDark: false),
-      darkTheme: AppTheme.getTheme(isDark: false),
+      darkTheme: AppTheme.getTheme(isDark: true),
       getPages: AppPages.pages,
       initialRoute: AppRoutes.initial,
       locale: const Locale("pt", "BR"),

@@ -1,12 +1,11 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 
-class WindowTitlebarWidget extends StatelessWidget {
-  const WindowTitlebarWidget({super.key});
-
+class WindowsTitlebarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
@@ -59,5 +58,18 @@ class WindowTitlebarWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class WindowTitlebarWidget extends StatelessWidget {
+  const WindowTitlebarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if (Platform.isWindows) {
+      return WindowsTitlebarWidget();
+    }
+
+    return Container();
   }
 }

@@ -36,7 +36,7 @@ class _SongWidgetState extends State<_SongWidget> {
       backgroundColor = colors.secondary;
       foregroundColor = colors.primary;
     } else {
-      backgroundColor = colors.background;
+      backgroundColor = colors.background.withOpacity(0.6);
       foregroundColor = colors.text;
     }
 

@@ -44,11 +44,7 @@ class PlayerService extends GetxService {
       _position.value = state.position ?? Duration.zero;
     });
     _player.bufferingProgressStream.listen((double state) {
-      _buffer.value = Duration(
-        milliseconds: int.parse(
-          state.toString(),
-        ),
-      );
+      _buffer.value = Duration(milliseconds: state.round());
     });
     _player.currentStream.listen((CurrentState state) {
       if (state.index != null && _queue.value != null) {
