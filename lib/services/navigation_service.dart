@@ -9,6 +9,11 @@ class NavigationService extends GetxService {
 
   void toNamed(String page) {
     Get.toNamed(page);
-    _currentRoute.value = page;
+    _currentRoute.value = Get.currentRoute;
+  }
+
+  void back() {
+    Get.back();
+    _currentRoute.value = Get.currentRoute;
   }
 }

@@ -12,6 +12,7 @@ class PlayerService extends GetxService {
   late final Player _player;
 
   final Rx<List<SongModel>?> _queue = Rx(null);
+  final Rx<List<SongModel>?> _playlist = Rx(null);
   final Rx<SongModel?> _currentSong = Rx(null);
   final Rx<Duration> _duration = Rx(Duration.zero);
   final Rx<Duration> _position = Rx(Duration.zero);
@@ -22,6 +23,7 @@ class PlayerService extends GetxService {
   final Rx<bool> _isPlaying = Rx(false);
 
   //getters
+  List<SongModel>? get getQueue => _queue.value;
   SongModel? get getCurrentSong => _currentSong.value;
   Duration get getDuration => _duration.value;
   Duration get getPosition => _position.value;
@@ -69,7 +71,7 @@ class PlayerService extends GetxService {
     required int index,
   }) async {
     if (const IterableEquality().equals(_queue.value, songs) == false) {
-      _queue.value = songs?.toList();
+      _playlist.value = songs?.toList();
 
       final List<Uri?> urls = await Future.wait(
         [for (SongModel song in songs ?? []) repository.getStreamUrl(song)],
@@ -80,6 +82,10 @@ class PlayerService extends GetxService {
       );
 
       _player.open(playlist, autoStart: false);
+    }
+
+    if (_playlist.value != null) {
+      _queue.value = _playlist.value?.toList();
     }
 
     _player.play();
@@ -116,7 +122,29 @@ class PlayerService extends GetxService {
     _isShuffle.value = !_isShuffle.value;
   }
 
+  void muteOrUnmute() {
+    if (_volume.value == 0) {
+      _volume.value = 1;
+      _player.setVolume(_volume.value);
+    } else {
+      _volume.value = 0;
+      _player.setVolume(_volume.value);
+    }
+  }
+
   void setVolume(double volume) {
     _player.setVolume(volume);
+  }
+
+  void reorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+
+    final SongModel? song = _queue.value?.removeAt(oldIndex);
+    if (song != null) {
+      _queue.value?.insert(newIndex, song);
+      _player.move(oldIndex, newIndex);
+    }
   }
 }

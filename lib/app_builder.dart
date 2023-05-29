@@ -136,10 +136,9 @@ class AppBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
-    final ThemeMetrics metrics = Theme.of(context).extension<ThemeMetrics>()!;
 
     final Color backgroundColor =
-        isTransparent ? Colors.transparent : Colors.white;
+        isTransparent ? Colors.transparent : colors.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -149,7 +148,6 @@ class AppBuilder extends StatelessWidget {
             child: _WindowContent(
               child: Container(
                 color: colors.background,
-                padding: EdgeInsets.all(metrics.padding),
                 child: child,
               ),
             ),

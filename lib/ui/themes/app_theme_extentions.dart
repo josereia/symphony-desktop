@@ -74,7 +74,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
   final double smallGap;
   final double borderWidth;
   final double iconSize;
-  final double blurAmmount;
+  final double blurAmount;
   final Radius borderRadius;
   final Size buttonSize;
   final Radius buttonRadius;
@@ -82,6 +82,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
   final Radius fieldRadius;
   final Size sidebarSize;
   final Size playerSize;
+  final Size headerSize;
 
   const ThemeMetrics({
     required this.padding,
@@ -90,7 +91,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
     required this.smallGap,
     required this.borderWidth,
     required this.iconSize,
-    required this.blurAmmount,
+    required this.blurAmount,
     required this.borderRadius,
     required this.buttonSize,
     required this.buttonRadius,
@@ -98,6 +99,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
     required this.fieldRadius,
     required this.sidebarSize,
     required this.playerSize,
+    required this.headerSize,
   });
 
   @override
@@ -116,6 +118,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
     Radius? fieldRadius,
     Size? sidebarSize,
     Size? playerSize,
+    Size? headerSize,
   }) {
     return ThemeMetrics(
       padding: padding ?? this.padding,
@@ -124,7 +127,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
       smallGap: smallGap ?? this.smallGap,
       borderWidth: borderWidth ?? this.borderWidth,
       iconSize: iconSize ?? this.iconSize,
-      blurAmmount: blurAmmount ?? this.blurAmmount,
+      blurAmount: blurAmmount ?? this.blurAmount,
       borderRadius: borderRadius ?? this.borderRadius,
       buttonSize: buttonSize ?? this.buttonSize,
       buttonRadius: buttonRadius ?? this.buttonRadius,
@@ -132,6 +135,7 @@ class ThemeMetrics extends ThemeExtension<ThemeMetrics> {
       fieldRadius: fieldRadius ?? this.fieldRadius,
       sidebarSize: sidebarSize ?? this.sidebarSize,
       playerSize: playerSize ?? this.playerSize,
+      headerSize: headerSize ?? this.headerSize,
     );
   }
 

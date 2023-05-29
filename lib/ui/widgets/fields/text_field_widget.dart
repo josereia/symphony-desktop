@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
+import 'package:symphony_desktop/ui/widgets/backdrop_blur_widget.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -28,41 +29,35 @@ class TextFieldWidget extends StatelessWidget {
       borderSide: BorderSide(color: colors.border),
     );
 
-    return ClipRRect(
+    return BackdropBlurWidget(
       borderRadius: BorderRadius.all(metrics.fieldRadius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: metrics.blurAmmount,
-          sigmaY: metrics.blurAmmount,
-        ),
-        child: SizedBox(
-          height: metrics.fieldSize.height,
-          child: TextField(
-            controller: controller,
-            onSubmitted: onSubmitted,
-            style: theme.textTheme.bodyMedium,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                color: colors.text.withOpacity(0.6),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: metrics.padding,
-              ),
-              filled: true,
-              fillColor: colors.secondary,
-              prefixIcon: Icon(
-                prefixIcon,
-                size: metrics.iconSize,
-              ),
-              border: border,
-              enabledBorder: border,
-              focusedBorder: border.copyWith(
-                borderSide: BorderSide(color: colors.primary),
-              ),
-              constraints: BoxConstraints(
-                maxWidth: metrics.fieldSize.width,
-              ),
+      child: SizedBox(
+        height: metrics.fieldSize.height,
+        child: TextField(
+          controller: controller,
+          onSubmitted: onSubmitted,
+          style: theme.textTheme.bodyMedium,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: theme.textTheme.bodyMedium?.copyWith(
+              color: colors.text.withOpacity(0.6),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: metrics.padding,
+            ),
+            filled: true,
+            fillColor: colors.secondary,
+            prefixIcon: Icon(
+              prefixIcon,
+              size: metrics.iconSize,
+            ),
+            border: border,
+            enabledBorder: border,
+            focusedBorder: border.copyWith(
+              borderSide: BorderSide(color: colors.primary),
+            ),
+            constraints: BoxConstraints(
+              maxWidth: metrics.fieldSize.width,
             ),
           ),
         ),

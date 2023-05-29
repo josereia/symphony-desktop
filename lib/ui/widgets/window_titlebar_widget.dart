@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 
 class WindowsTitlebarWidget extends StatelessWidget {
+  const WindowsTitlebarWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     final ThemeColors colors = Theme.of(context).extension<ThemeColors>()!;
@@ -24,12 +26,13 @@ class WindowsTitlebarWidget extends StatelessWidget {
               bottomLeft: metrics.borderRadius / 2,
             ),
             child: BackdropFilter(
+              blendMode: BlendMode.src,
               filter: ImageFilter.blur(
-                sigmaX: metrics.blurAmmount / 2,
-                sigmaY: metrics.blurAmmount / 2,
+                sigmaX: metrics.blurAmount / 2,
+                sigmaY: metrics.blurAmount / 2,
               ),
               child: ColoredBox(
-                color: colors.background.withOpacity(0.8),
+                color: colors.background,
                 child: Row(
                   children: [
                     MinimizeWindowButton(
@@ -67,7 +70,7 @@ class WindowTitlebarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Platform.isWindows) {
-      return WindowsTitlebarWidget();
+      return const WindowsTitlebarWidget();
     }
 
     return Container();

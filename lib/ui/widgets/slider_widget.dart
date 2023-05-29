@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:symphony_desktop/ui/themes/app_theme_extentions.dart';
 import 'package:symphony_desktop/ui/widgets/buttons/icon_button_widget.dart';
-import 'package:symphony_desktop/ui/widgets/gap_widget.dart';
 
 class SliderWidget extends StatefulWidget {
   final double min;
@@ -32,7 +31,13 @@ class _SliderWidgetState extends State<SliderWidget> {
   @override
   void initState() {
     super.initState();
-    setState(() => currentValue = widget.max);
+    currentValue = widget.max;
+  }
+
+  @override
+  void didUpdateWidget(covariant SliderWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    currentValue = widget.value;
   }
 
   void onChanged(double value) {

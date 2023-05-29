@@ -15,7 +15,7 @@ abstract class AppTheme {
       smallGap: 8,
       borderWidth: 1,
       iconSize: 18,
-      blurAmmount: 16,
+      blurAmount: 16,
       borderRadius: Radius.circular(16),
       buttonSize: Size(300, 34),
       buttonRadius: Radius.circular(16),
@@ -23,6 +23,7 @@ abstract class AppTheme {
       fieldRadius: Radius.circular(16),
       sidebarSize: Size(180, double.infinity),
       playerSize: Size(double.infinity, 68),
+      headerSize: Size(double.infinity, 60),
     );
 
     if (isDark) {
