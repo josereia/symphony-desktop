@@ -1,16 +1,7 @@
-# symphony_desktop
+# symphony music player
 
-A new Flutter project.
+After a long hiatus, the project is now **restarting** in other repositories in a **GitHub** organization: [https://github.com/symphony-mp](https://github.com/symphony-mp). The project will be open-source, multi-platform and will include both online and offline resources.
 
-## Getting Started
+Soon this old repository will be **private** or **deleted** so if you are interested, a contributor or want to contribute to the project I suggest you migrate to the new repositories available here: [https://github.com/symphony-mp](https://github.com/symphony-mp).
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Sincerely, João Sereia[\<joao.sereia@softyes.com.br\>](mailto:joao.sereia@softyes.com.br).
